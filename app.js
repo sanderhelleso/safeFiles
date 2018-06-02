@@ -24,8 +24,9 @@ app.on("ready", function() {
 	// set app menu
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 	Menu.setApplicationMenu(mainMenu);
-})
+});
 
+// create select directory window
 function createSelectDirWindow() {
 	// create new window
 	selectDirWindow = new BrowserWindow({
@@ -40,11 +41,58 @@ function createSelectDirWindow() {
 		protocol: "file:",
 		slashes: true
 	}));
+
+	// garbage collecton
+	selectDirWindow.on("close", function(){
+		selectDirWindow = null;
+	});
+
+	// remove menu
+	selectDirWindow.setMenu(null);
 }
 
 // menu template
 const mainMenuTemplate = [
-	{
-		label: "Select Directory"
+	{	// Menu item 1: Select Directory
+		label: "Select Directory",
+		// keyboard shortcut
+		accelerator: process.platform == "darwin" ? "Command+S" : "Ctrl+S",
+		// open window on click
+		click() {
+			createSelectDirWindow();
+		}
+	},
+	{	// Menu item 2: Select Directory
+		label: "Quit Application",
+		// keyboard shortcut
+		accelerator: process.platform == "darwin" ? "Command+Q" : "Ctrl+Q",
+		// quit app on click
+		click() {
+			app.quit();
+		}
 	}
 ];
+
+// if mac, add empty object to fix menu bug
+if (process.platform == "darwin") {
+	mainMenuTemplate.unshift({});
+}
+
+// add developer tools if not in production
+if (process.env.NODE_ENV != "production") {
+	mainMenuTemplate.push({
+		label: "Developer Tools",
+		submenu: [
+			{	// toggle dev tools
+				label: "Toggle Developer Tools",
+				accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
+				click(item, focusedWindow) {
+					focusedWindow.toggleDevTools();
+				}
+			},
+			{	// reload app
+				role: "reload"
+			}
+		]
+	});
+}
