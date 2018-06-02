@@ -1,10 +1,13 @@
+// modules
 const electron = require("electron");
 const ipc = require('electron').ipcMain;
 const url = require("url");
 const path = require("path");
 
+// main app
 const {app, BrowserWindow, Menu} = electron;
 
+// app windows
 let mainWindow;
 let selectDirWindow;
 
