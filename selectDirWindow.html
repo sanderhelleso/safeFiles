@@ -4,6 +4,24 @@
 	<title>Select directory</title>
 </head>
 <body>
-	<h1>Squawk</h1>
+	<form>
+		<div>
+			<label>Select a directory you want to backup</label>
+			<input type="text" name="directoryFrom">
+		</div>
+		<button type="submit">Set backup</button>
+	</form>
+	<script type="text/javascript">
+		const electron = require("electron");
+		const {ipcRenderer} = electron;
+
+		const form = document.querySelector("form");
+		form.addEventListener("submit", setDirectory);
+		
+		function setDirectory(e) {
+			e.preventDefault();
+			console.log(123);
+		}
+	</script>
 </body>
 </html>

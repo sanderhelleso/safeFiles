@@ -50,8 +50,10 @@ function createSelectDirWindow() {
 		selectDirWindow = null;
 	});
 
-	// remove menu
-	selectDirWindow.setMenu(null);
+	// remove menu @TODO: REMOVE BEFORE PRODUCTION, enabled for dev tools
+	//selectDirWindow.setMenu(null);
+	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+	Menu.setApplicationMenu(mainMenu);
 }
 
 // menu template
