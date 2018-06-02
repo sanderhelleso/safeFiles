@@ -20,7 +20,7 @@ app.on("ready", function() {
 	// create new window
 	mainWindow = new BrowserWindow({
 		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
-		width: 1000,
+		width: 1150,
 		height: 700
 	});
 

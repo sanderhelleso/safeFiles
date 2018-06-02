@@ -1,0 +1,111 @@
+body {
+	overflow: hidden;
+	font-family: 'Megrim', cursive;
+}
+
+/********* MAIN CONTAINER ***********/
+#mainCont {
+	background: linear-gradient(
+    rgba(118, 0, 255, 0.9), 
+    rgba(118, 0, 255, 0.1)),
+    url("../img/main.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	height: 100vh;
+}
+
+#mainHeading {
+	color: white;
+	font-size: 75px;
+	margin-left: 10%;
+	margin-bottom: 0;
+	font-weight: 100;
+}
+
+#mainCont p {
+	font-size: 18px;
+	margin-left: 10%;
+	margin-top: 0%;
+	color: white;
+	font-weight: 400;
+	font-family: 'Poiret One', cursive;
+}
+
+/******** SIDE CONTAINER ***********/
+#sideCont {
+	box-shadow: -5px 0 5px -5px #333;
+	min-height: 100vh;
+	background: #6a3093;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #a044ff, #6a3093);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #a044ff, #6a3093); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	color: white;
+	font-weight: 100;
+}
+
+#sideHeading {
+	font-size: 35px;
+	padding-bottom: 15px;
+	border-bottom: 0.5px solid #b388ff;
+}
+
+/******* BACKED UP CONTAINER ********/
+#backedUpCont h5 {
+	font-size: 16px;
+	word-break: break-all;
+	font-family: 'Poiret One', cursive;
+	letter-spacing: 2px;
+}
+
+.backedUpDir {
+	margin-top: 20px;
+	padding-bottom: 30px;
+	border-bottom: 0.5px solid #b388ff;
+}
+
+#backedUpCont i {
+	color: #66bb6a;
+}
+
+#backedUpCont a i {
+	color: white;
+}
+
+#backedUpCont .stopBackUpBtn {
+	background-color: #ef5350;
+	font-weight: 100;
+}
+
+#backedUpCont .startBackUpBtn {
+	background-color: #4db6ac;
+	font-weight: 100;
+}
+
+#backedUpCont .disabledBtn {
+	opacity: 0.3;
+}
+
+#backedUpCont .running {
+	font-size: 20px;
+	margin-right: 5px;
+	position: relative;
+	/* Adjust these values accordingly */
+	top: 2.5px;
+	color: #66bb6a;
+}
+
+#backedUpCont .stopped {
+	font-size: 20px;
+	margin-right: 5px;
+	position: relative;
+	/* Adjust these values accordingly */
+	top: 2.5px;
+	color: #ef5350;
+}
+
+
+#backedUpCont .status {
+	font-size: 18px;
+	text-transform: uppercase;
+	font-family: 'Poiret One', cursive;
+}
