@@ -58,15 +58,20 @@ function createSelectDirWindow() {
 	Menu.setApplicationMenu(mainMenu);
 }
 
-// catch paths sendt from selectDirWindow.html
+/******************************************* 
+catch paths sendt from selectDirWindow.html
+*******************************************/
 let pathFrom;
 let pathTo;
+
+// handler for from path
 ipcMain.on("directoryFrom:path", function(e, path){
 	pathFrom = path;
 	mainWindow.webContents.send("directoryFrom:path", path);
 	selectDirWindow.close();
 });
 
+// handler for to path
 ipcMain.on("directoryTo:path", function(e, path){
 	pathTo = path;
 	mainWindow.webContents.send("directoryTo:path", path);
@@ -77,15 +82,11 @@ ipcMain.on("directoryTo:path", function(e, path){
 
 // functon to copy files from selected dirs
 function copyFiles(pathFrom, pathTo) {
-	console.log(pathFrom);
-	console.log(pathTo);
-
-	fs.readdir(pathFrom, function(err, files) {
-	    //console.log(files);
-	 	
+	// read selected from directory
+	fs.readdir(pathFrom, function(err, files) {	 	
 	    files.forEach(file => {
-	    	//console.log(file);
-	    	fs.copySync(path.resolve(__dirname,"./" + file), pathTo + "/" + file);
+	    	// copy files from selected dirs
+	    	fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    });
 	});
 }

@@ -9,6 +9,7 @@
   "author": "Sander Hellesø",
   "license": "ISC",
   "dependencies": {
-    "electron": "^2.0.2"
+    "electron": "^2.0.2",
+    "fs-extra": "^6.0.1"
   }
 }
