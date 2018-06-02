@@ -18,7 +18,11 @@ let selectDirWindow;
 app.on("ready", function() {
 
 	// create new window
-	mainWindow = new BrowserWindow({icon: path.join(__dirname + "/img/icon/safeFiles.ico")});
+	mainWindow = new BrowserWindow({
+		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
+		width: 1000,
+		height: 700
+	});
 
 	// load html into window
 	mainWindow.loadURL(url.format({
@@ -30,14 +34,23 @@ app.on("ready", function() {
 	// set app menu
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+
+	// disable resizing of window
+	mainWindow.setResizable(false);
+
+	// close app and all open windows on exit
+	mainWindow.on("closed", function(){
+		mainWindow = null;
+		app.quit();
+	});
 });
 
 // create select directory window
 function createSelectDirWindow() {
 	// create new window
 	selectDirWindow = new BrowserWindow({
-		window: 350,
-		height: 450,
+		width: 800,
+		height: 500,
 		title: "Select directory"
 	});
 
@@ -57,6 +70,9 @@ function createSelectDirWindow() {
 	//selectDirWindow.setMenu(null);
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+
+	// disable resizing of window
+	selectDirWindow.setResizable(false);
 }
 
 /******************************************* 
