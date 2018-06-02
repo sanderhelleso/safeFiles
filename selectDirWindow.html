@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>Select directory</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="css/selectDir.css">
 </head>
 <body>
 	<form>
@@ -13,20 +15,6 @@
 		</div>
 		<button type="submit">Set backup</button>
 	</form>
-	<script type="text/javascript">
-		const electron = require("electron");
-		const {ipcRenderer} = electron;
-
-		const form = document.querySelector("form");
-		form.addEventListener("submit", setDirectory);
-
-		function setDirectory(e) {
-			e.preventDefault();
-			const pathFrom = document.querySelector("#directoryFrom").value;
-			const pathTo = document.querySelector("#directoryTo").value;
-			ipcRenderer.send("directoryFrom:path", pathFrom);
-			ipcRenderer.send("directoryTo:path", pathTo);
-		}
-	</script>
+	<script type="text/javascript" src="js/selectDirWindow.js"></script>
 </body>
 </html>
