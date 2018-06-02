@@ -1,8 +1,10 @@
+'use strict'
+
 // modules
 const electron = require("electron");
 const url = require("url");
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs-extra");
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -57,25 +59,33 @@ function createSelectDirWindow() {
 }
 
 // catch paths sendt from selectDirWindow.html
+let pathFrom;
+let pathTo;
 ipcMain.on("directoryFrom:path", function(e, path){
-	readDirectory(path);
+	pathFrom = path;
 	mainWindow.webContents.send("directoryFrom:path", path);
 	selectDirWindow.close();
 });
 
 ipcMain.on("directoryTo:path", function(e, path){
-	readDirectory(path);
+	pathTo = path;
 	mainWindow.webContents.send("directoryTo:path", path);
+
+	// run copy files
+	copyFiles(pathFrom, pathTo);
 });
 
-// read selected directory and get files
-function readDirectory(path) {
-	console.log(path);
-	fs.readdir(path, function(err, files) {
-	    console.log(files);
+// functon to copy files from selected dirs
+function copyFiles(pathFrom, pathTo) {
+	console.log(pathFrom);
+	console.log(pathTo);
+
+	fs.readdir(pathFrom, function(err, files) {
+	    //console.log(files);
 	 	
 	    files.forEach(file => {
-	    	console.log(file);
+	    	//console.log(file);
+	    	fs.copySync(path.resolve(__dirname,"./" + file), pathTo + "/" + file);
 	    });
 	});
 }
