@@ -45,6 +45,6 @@ function createSelectDirWindow() {
 // menu template
 const mainMenuTemplate = [
 	{
-		label: "Select Directory",
+		label: "Select Directory"
 	}
 ];
