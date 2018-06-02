@@ -1,3 +1,4 @@
+// enables ES6 +
 'use strict'
 
 // modules
@@ -17,13 +18,13 @@ let selectDirWindow;
 app.on("ready", function() {
 
 	// create new window
-	mainWindow = new BrowserWindow({});
+	mainWindow = new BrowserWindow({icon: path.join(__dirname + "/img/icon/safeFiles.ico")});
 
 	// load html into window
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, "mainWindow.html"),
 		protocol: "file:",
-		slashes: true
+		slashes: true,
 	}));
 
 	// set app menu
