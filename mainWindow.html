@@ -6,14 +6,20 @@
 <body>
 	<h1>Hello World</h1>
 	<h2 id="test"></h2>
+	<h2 id="test2"></h2>
 
 	<script type="text/javascript">
 		const electron = require("electron");
 		const {ipcRenderer} = electron;
 		const h2 = document.querySelector("#test");
+		const h22 = document.querySelector("#test2");
 
 		ipcRenderer.on("directoryFrom:path", function(e, path){
 			h2.innerHTML = path;
+		});
+
+		ipcRenderer.on("directoryTo:path", function(e, path){
+			h22.innerHTML = path;
 		});
 	</script>
 </body>

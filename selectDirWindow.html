@@ -6,8 +6,10 @@
 <body>
 	<form>
 		<div>
-			<label>Select a directory you want to backup</label>
+			<label>Select a directory you want to backup from</label>
 			<input id="directoryFrom" type="text" name="directoryFrom">
+			<label>Select a directory you want to backup to</label>
+			<input id="directoryTo" type="text" name="directoryTo">
 		</div>
 		<button type="submit">Set backup</button>
 	</form>
@@ -20,9 +22,10 @@
 
 		function setDirectory(e) {
 			e.preventDefault();
-			const path = document.querySelector("#directoryFrom").value;
-			console.log(path);
-			ipcRenderer.send("directoryFrom:path", path);
+			const pathFrom = document.querySelector("#directoryFrom").value;
+			const pathTo = document.querySelector("#directoryTo").value;
+			ipcRenderer.send("directoryFrom:path", pathFrom);
+			ipcRenderer.send("directoryTo:path", pathTo);
 		}
 	</script>
 </body>

@@ -2,6 +2,7 @@
 const electron = require("electron");
 const url = require("url");
 const path = require("path");
+const fs = require("fs");
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -62,9 +63,21 @@ ipcMain.on("directoryFrom:path", function(e, path){
 	selectDirWindow.close();
 });
 
-// read selected directory
+ipcMain.on("directoryTo:path", function(e, path){
+	readDirectory(path);
+	mainWindow.webContents.send("directoryTo:path", path);
+});
+
+// read selected directory and get files
 function readDirectory(path) {
 	console.log(path);
+	fs.readdir(path, function(err, files) {
+	    console.log(files);
+	 	
+	    files.forEach(file => {
+	    	console.log(file);
+	    });
+	});
 }
 
 // menu template
