@@ -1,11 +1,10 @@
 // modules
 const electron = require("electron");
-const ipc = require('electron').ipcMain;
 const url = require("url");
 const path = require("path");
 
 // main app
-const {app, BrowserWindow, Menu} = electron;
+const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 // app windows
 let mainWindow;
@@ -54,6 +53,18 @@ function createSelectDirWindow() {
 	//selectDirWindow.setMenu(null);
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 	Menu.setApplicationMenu(mainMenu);
+}
+
+// catch paths sendt from selectDirWindow.html
+ipcMain.on("directoryFrom:path", function(e, path){
+	readDirectory(path);
+	mainWindow.webContents.send("directoryFrom:path", path);
+	selectDirWindow.close();
+});
+
+// read selected directory
+function readDirectory(path) {
+	console.log(path);
 }
 
 // menu template
