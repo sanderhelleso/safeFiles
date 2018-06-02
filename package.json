@@ -1,0 +1,14 @@
+{
+  "name": "safefiles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Sander Hellesø",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^2.0.2"
+  }
+}
