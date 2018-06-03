@@ -1,6 +1,6 @@
 #electron-titlebar {
 	background: linear-gradient(
-    rgba(20, 20, 20, 0.9), 
+    rgba(0, 0, 0, 0.9), 
     rgba(118, 0, 255, 0.9)),
     url("../img/bg2.jpg");
 	background-size: cover;
@@ -37,7 +37,15 @@ body {
 }
 
 #mainCont {
-	margin-top: 7.5%;
+	margin-top: 12%;
+}
+
+#sideCont {
+	margin-top: 5%;
+}
+
+#sideCont h5 {
+	color: #f5f5f5;
 }
 
 #mainRow {
@@ -87,4 +95,10 @@ input {
 
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
     border: 2px solid #f5f5f5 !important;
+}
+
+button {
+	background: #4776E6;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #8E54E9, #4776E6);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #8E54E9, #4776E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }

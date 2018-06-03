@@ -7,58 +7,151 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Megrim|Poiret+One" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/selectDir.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+
 </head>
 <body>
 	<div id="electron-titlebar" class="inset drag z-depth-3">
 		<div id="titlebar"><span id="title">Select Directory</span></div>
 	</div>
-	<div class="row">
-		<form id="mainCont" class="col s6">
-		    <div id="mainRow" class="row">
-		        <div class="input-field col s12">
-		          	<label for="directoryFrom">Select a directory you want to backup from</label>
-					<input id="directoryFrom" type="text" name="directoryFrom">
-		        </div>
-		        <div class="input-field col s12">
-			        <label for="directoryTo">Select a directory you want to backup to</label>
-					<input id="directoryTo" type="text" name="directoryTo">
-		        </div>
-		      	</div>
-		      	<div id="buttons">
-		      		<p>
-					    <label>
-					      	<input class="with-gap" name="group1" type="radio"/>
-					      	<span>Every hour</span>
-					   	</label>
-					</p>
-			  		<p>
-					    <label>
-					      	<input class="with-gap" name="group1" type="radio"/>
-					      	<span>Every day</span>
-					   	</label>
-					</p>
-					<p>
-					    <label>
-					      	<input class="with-gap" name="group1" type="radio"/>
-					      	<span>Every 3 day</span>
-					   	</label>
-					</p>
-					<p>
-					    <label>
-					      	<input class="with-gap" name="group1" type="radio"/>
-					      	<span>Every 7 day</span>
-					   	</label>
-					</p>
-					<p>
-					    <label>
-					      	<input class="with-gap" name="group1" type="radio" checked/>
-					      	<span>On file change</span>
-					   	</label>
-					</p>
+	<div id="container" class="row">
+		<div class="col s7">
+			<form id="mainCont" class="col s12">
+			    <div id="mainRow" class="row">
+			        <div class="input-field col s12">
+			          	<label for="directoryFrom">Select a directory you want to backup from</label>
+						<input id="directoryFrom" type="text" name="directoryFrom">
+			        </div>
+			        <div class="input-field col s12">
+				        <label for="directoryTo">Select a directory you want to backup to</label>
+						<input id="directoryTo" type="text" name="directoryTo">
+			        </div>
+			      	</div>
+			      	<div id="buttons">
+			      		<p>
+						    <label>
+						      	<input class="with-gap" name="group1" type="radio"/>
+						      	<span>Every hour</span>
+						   	</label>
+						</p>
+				  		<p>
+						    <label>
+						      	<input class="with-gap" name="group1" type="radio"/>
+						      	<span>Every day</span>
+						   	</label>
+						</p>
+						<p>
+						    <label>
+						      	<input class="with-gap" name="group1" type="radio"/>
+						      	<span>Every 3 day</span>
+						   	</label>
+						</p>
+						<p>
+						    <label>
+						      	<input class="with-gap" name="group1" type="radio"/>
+						      	<span>Every 7 day</span>
+						   	</label>
+						</p>
+						<p>
+						    <label>
+						      	<input class="with-gap" name="group1" type="radio" checked/>
+						      	<span>On file change</span>
+						   	</label>
+						</p>
+					</div>
+			      	<button type="submit" class="waves-effect waves-light btn z-depth-3"><i class="material-icons left">backup</i>Set backup</button>
 				</div>
-		      	<button type="submit" class="waves-effect waves-light btn">Set backup</button>
+			</form>
+			<div id="sideCont" class="col s4 offset-s1">
+				<div class="col s12">
+					<h5>Dir 1</h5>
+					<canvas id="myChart" width="100" height="85"></canvas>
+					<script>
+					var ctx = document.getElementById("myChart").getContext('2d');
+					var myChart = new Chart(ctx, {
+					    type: 'bar',
+					    data: {
+					        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+					        datasets: [{
+					            label: '# of Votes',
+					            data: [12, 19, 3, 5, 2, 3],
+					            backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(255, 206, 86, 0.2)',
+					                'rgba(75, 192, 192, 0.2)',
+					                'rgba(153, 102, 255, 0.2)',
+					                'rgba(255, 159, 64, 0.2)'
+					            ],
+					            borderColor: [
+					                'rgba(255,99,132,1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(255, 206, 86, 1)',
+					                'rgba(75, 192, 192, 1)',
+					                'rgba(153, 102, 255, 1)',
+					                'rgba(255, 159, 64, 1)'
+					            ],
+					            borderWidth: 1
+					        }]
+					    },
+					    options: {
+					        scales: {
+					            yAxes: [{
+					                ticks: {
+					                    beginAtZero:true
+					                }
+					            }]
+					        }
+					    }
+					});
+					</script>
+				</div>
+				<div class="col s12">
+					<h5>Dir 2</h5>
+					<canvas id="myChart2" width="100" height="85"></canvas>
+					<script>
+					var ctx = document.getElementById("myChart2").getContext('2d');
+					var myChart = new Chart(ctx, {
+					    type: 'bar',
+					    data: {
+					        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+					        datasets: [{
+					            label: '# of Votes',
+					            data: [12, 19, 3, 5, 2, 3],
+					            backgroundColor: [
+					                'rgba(255, 99, 132, 0.2)',
+					                'rgba(54, 162, 235, 0.2)',
+					                'rgba(255, 206, 86, 0.2)',
+					                'rgba(75, 192, 192, 0.2)',
+					                'rgba(153, 102, 255, 0.2)',
+					                'rgba(255, 159, 64, 0.2)'
+					            ],
+					            borderColor: [
+					                'rgba(255,99,132,1)',
+					                'rgba(54, 162, 235, 1)',
+					                'rgba(255, 206, 86, 1)',
+					                'rgba(75, 192, 192, 1)',
+					                'rgba(153, 102, 255, 1)',
+					                'rgba(255, 159, 64, 1)'
+					            ],
+					            borderWidth: 1
+					        }]
+					    },
+					    options: {
+					        scales: {
+					            yAxes: [{
+					                ticks: {
+					                    beginAtZero:true
+					                }
+					            }]
+					        }
+					    }
+					});
+					</script>
+				</div>
 			</div>
-		</form>
+		</div>
+	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/selectDirWindow.js"></script>
 </body>
