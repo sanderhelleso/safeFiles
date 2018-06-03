@@ -82,7 +82,8 @@ function getDirStats() {
 
 function handleFileStats() {
 	ipcRenderer.on("directoryFrom:dir", function(e, stats){
-		document.querySelector(".dirSizeFrom").innerHTML = stats;
+		console.log(stats);
+		//document.querySelector(".dirSizeFrom").innerHTML = stats;
 	});
 
 	ipcRenderer.on("directoryTo:dir", function(e, stats){

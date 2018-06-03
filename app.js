@@ -118,12 +118,16 @@ get directory and display directory stats
 ipcMain.on("directoryFrom:dir", function(e, path){
 	fromDirSize = 0;
 	fileSizeInBytes = 0;
+	fileExtsNames = [];
+	fileExtsNamesCount = [];
 	getTotalSize(path, "from");
 });
 
 ipcMain.on("directoryTo:dir", function(e, path){
 	toDirSize = 0;
 	fileSizeInBytes = 0;
+	fileExtsNames = [];
+	fileExtsNamesCount = [];
 	getTotalSize(path, "to");
 });
 
@@ -131,6 +135,8 @@ ipcMain.on("directoryTo:dir", function(e, path){
 let fromDirSize = 0;
 let toDirSize = 0;
 let fileSizeInBytes = 0;
+let fileExtsNames = [];
+let fileExtsNamesCount = [];
 function getTotalSize(pathToDir, dir) {
 	fs.readdir(pathToDir, function(err, files) {	 	
 	    files.forEach(file => {
@@ -138,7 +144,19 @@ function getTotalSize(pathToDir, dir) {
 
 	    	// get fileSize
 	    	let stats = fs.statSync(file);
-	    	fileSizeInBytes += stats.size
+	    	if (fileExtsNames.indexOf(path.extname(file)) === -1 && path.extname(file) != "") {
+	    		fileExtsNames.push(path.extname(file));
+	    	}
+
+	    	fileExtsNamesCount.length = fileExtsNames.length;
+	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] === undefined) {
+	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = 1;
+	    	}
+
+	    	else {
+	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] + 1;
+	    	}
+	    	fileSizeInBytes += stats.size;
 
 	    	if (dir === "from") {
 	    		fromDirSize = fileSizeInBytes;
@@ -157,12 +175,16 @@ function getTotalSize(pathToDir, dir) {
 	});
 	bytesToSize(fileSizeInBytes);
 
+	console.log(fileExtsNames);
+	console.log(fileExtsNamesCount);
+
+
 	if (dir === "from") {
-		selectDirWindow.webContents.send("directoryFrom:dir", bytesToSize(fromDirSize));
+		selectDirWindow.webContents.send("directoryFrom:dir", [bytesToSize(fromDirSize), fileExtsNames, fileExtsNamesCount]);
 	}
 
 	else {
-		selectDirWindow.webContents.send("directoryTo:dir", bytesToSize(toDirSize));
+		selectDirWindow.webContents.send("directoryTo:dir", [bytesToSize(toDirSize), fileExtsNames, fileExtsNamesCount]);
 	}
 }
 
