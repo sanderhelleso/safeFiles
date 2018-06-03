@@ -29,6 +29,7 @@ function fullScreenMode() {
 	const mainCont =  document.querySelector("#mainCont");
 
 	/*** check if screen is in what mode, run code accordingly ***/
+	
 	// open
 	if (isFullScreen === false) {
 		sideCont.className = "col s12 animated fadeInLeft";

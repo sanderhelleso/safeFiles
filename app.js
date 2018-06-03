@@ -19,10 +19,10 @@ app.on("ready", function() {
 
 	// create new window
 	mainWindow = new BrowserWindow({
-		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
+		icon: path.join(__dirname + "/img/icon/deer.ico"),
 		width: 1150,
 		height: 600,
-		frame: false
+		frame: false,
 	});
 
 	// load html into window
