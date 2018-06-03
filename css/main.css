@@ -29,11 +29,7 @@ body:before {
 
 body {
 	overflow: hidden;
-	font-family: 'Megrim', cursive;
-}
-
-/********* MAIN CONTAINER ***********/
-#mainCont {
+	font-family: 'Poiret One', cursive;
 	background: linear-gradient(
     rgba(118, 0, 255, 0.5), 
     rgba(118, 0, 255, 0.1)),
@@ -41,6 +37,10 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+}
+
+/********* MAIN CONTAINER ***********/
+#mainCont {
 	height: 100vh;
 }
 
@@ -50,6 +50,8 @@ body {
 	margin-left: 10%;
 	margin-bottom: 0;
 	font-weight: 100;
+	font-family: 'Megrim', cursive;
+	letter-spacing: 5px;
 }
 
 #mainCont p {
@@ -78,7 +80,7 @@ body {
 	margin: 0;
 	margin-top: 5px;
 	font-size: 18px;
-	float: left;
+	float: right;
 	opacity: 0.5;
 	transition: all 0.3s;
 }
@@ -93,6 +95,7 @@ body {
 	font-size: 35px;
 	padding-bottom: 15px;
 	border-bottom: 0.5px solid #b388ff;
+	letter-spacing: 1px;
 }
 
 /******* BACKED UP CONTAINER ********/

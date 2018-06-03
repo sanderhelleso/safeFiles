@@ -22,14 +22,14 @@ function fullScreenMode() {
 	const mainCont =  document.querySelector("#mainCont");
 
 	if (isFullScreen === false) {
-		sideCont.className = "col s12";
+		sideCont.className = "col s12 animated slideInLeft";
 		mainCont.style.display = "none";
 		isFullScreen = true;
 		return;
 	}
 
 	else {
-		sideCont.className = "col s3";
+		sideCont.className = "col s3 animated slideInRight";
 		mainCont.style.display = "block";
 		isFullScreen = false;
 		return;
