@@ -16,6 +16,40 @@ function setDirectory(e) {
 	e.preventDefault();
 	const pathFrom = document.querySelector("#directoryFrom").value;
 	const pathTo = document.querySelector("#directoryTo").value;
-	ipcRenderer.send("directoryFrom:path", pathFrom);
-	ipcRenderer.send("directoryTo:path", pathTo);
+
+	console.log(isFile(pathFrom));
+	console.log(isFile(pathTo));
+
+	if (pathFrom.length < 1) {
+		M.toast({html: 'Please select a FROM directory'});
+		return;
+	}
+
+	if (pathTo.length < 1) {
+		M.toast({html: 'Please select a TO directory'});
+		return;
+	}
+
+	if (isFile(pathFrom)) {
+		M.toast({html: 'Directory path FROM is not valid'});
+		return;
+	}
+
+	if (isFile(pathTo)) {
+		M.toast({html: 'Directory path TO is not valid'});
+		return;
+	}
+
+	if (!isFile(pathFrom) && !isFile(pathTo)) {
+		ipcRenderer.send("directoryFrom:path", pathFrom);
+		ipcRenderer.send("directoryTo:path", pathTo);
+	}
+}
+
+function isFile(path) {
+    return path.split('/').pop().indexOf('.') > -1;
+}
+
+function isDir(path) {
+	return !isFile(path);
 }
