@@ -37,7 +37,7 @@ body {
 }
 
 #mainCont {
-	margin-top: 12%;
+	margin-top: 12.5%;
 }
 
 #sideCont {
@@ -53,12 +53,18 @@ body {
 }
 
 #sideCont p {
+	margin-bottom: 5px;
+	margin-top: 0px;
 	color: white;
 	font-size: 16px;
 }
 
 #mainRow {
 	margin-bottom: 0;
+}
+
+#fromDirStats, #toDirStats {
+	display: none;
 }
 
 #directoryTo {

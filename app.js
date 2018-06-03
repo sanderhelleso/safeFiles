@@ -52,7 +52,7 @@ function createSelectDirWindow() {
 	// create new window
 	selectDirWindow = new BrowserWindow({
 		width: 800,
-		height: 500,
+		height: 525,
 		title: "Select directory",
 		frame: false
 	});
@@ -116,16 +116,22 @@ function copyFiles(pathFrom, pathTo) {
 get directory and display directory stats
 *******************************************/
 ipcMain.on("directoryFrom:dir", function(e, path){
-	selectDirWindow.webContents.send("directoryFrom:dir", path);
+	fromDirSize = 0;
+	fileSizeInBytes = 0;
+	getTotalSize(path, "from");
 });
 
 ipcMain.on("directoryTo:dir", function(e, path){
-	getTotalSize(path);
+	toDirSize = 0;
+	fileSizeInBytes = 0;
+	getTotalSize(path, "to");
 });
 
 // get total folder size
+let fromDirSize = 0;
+let toDirSize = 0;
 let fileSizeInBytes = 0;
-function getTotalSize(pathToDir) {
+function getTotalSize(pathToDir, dir) {
 	fs.readdir(pathToDir, function(err, files) {	 	
 	    files.forEach(file => {
 	    	file = path.resolve(pathToDir, file), pathToDir + "/" + file;
@@ -134,17 +140,30 @@ function getTotalSize(pathToDir) {
 	    	let stats = fs.statSync(file);
 	    	fileSizeInBytes += stats.size
 
+	    	if (dir === "from") {
+	    		fromDirSize = fileSizeInBytes;
+	    	}
+
+	    	else {
+	    		toDirSize = fileSizeInBytes;
+	    	}
+
 	    	// check if file is dir
 	    	let isDir = fs.lstatSync(file).isDirectory();
 	    	if (isDir) {
-	    		getTotalSize(file);
+	    		getTotalSize(file, dir);
 	    	}
 	    });
 	});
 	bytesToSize(fileSizeInBytes);
 
-	selectDirWindow.webContents.send("directoryTo:dir", bytesToSize(fileSizeInBytes));
-	//console.log(bytesToSize(fileSizeInBytes));
+	if (dir === "from") {
+		selectDirWindow.webContents.send("directoryFrom:dir", bytesToSize(fromDirSize));
+	}
+
+	else {
+		selectDirWindow.webContents.send("directoryTo:dir", bytesToSize(toDirSize));
+	}
 }
 
 // algo for converting bytes to corresponding byte type

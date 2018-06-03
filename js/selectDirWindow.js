@@ -66,23 +66,26 @@ function getDirStats() {
 		// check if dir is FROM / TO
 		if (this.id === "directoryFrom") {
 			ipcRenderer.send("directoryFrom:dir", this.value);
-			ipcRenderer.on("directoryFrom:dir", function(e, path){
-				//console.log(path);
-			});
+			document.querySelector("#fromDirName").innerHTML = this.value;
+			document.querySelector("#fromDirStats").style.display = "block";
 		}
 
 		else {
+			console.log(this.value);
 			ipcRenderer.send("directoryTo:dir", this.value);
-			ipcRenderer.on("directoryTo:dir", function(e, path){
-				//console.log(path);
-			});
+			document.querySelector("#toDirName").innerHTML = this.value;
+			document.querySelector("#toDirStats").style.display = "block";
 		}
 		return;
 	}
 }
 
 function handleFileStats() {
+	ipcRenderer.on("directoryFrom:dir", function(e, stats){
+		document.querySelector(".dirSizeFrom").innerHTML = stats;
+	});
+
 	ipcRenderer.on("directoryTo:dir", function(e, stats){
-		console.log(stats);
+		document.querySelector(".dirSizeTo").innerHTML = stats;
 	});
 }

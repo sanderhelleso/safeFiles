@@ -63,10 +63,10 @@
 				</div>
 			</form>
 			<div id="sideCont" class="col s4 offset-s1">
-				<div class="col s12">
-					<h5>C:\wamp\www\safeFiles</h5>
-					<p class="center-align">Size: <span class="dirSize"></span></p>
-					<canvas id="dir1" width="100" height="80"></canvas>
+				<div id="fromDirStats" class="col s12 animated fadeIn">
+					<h5 id="fromDirName"></h5>
+					<p class="center-align">Size: <span class="dirSizeFrom"></span></p>
+					<canvas id="dir1" width="100" height="70"></canvas>
 					<script>
 					var ctx = document.getElementById("dir1").getContext('2d');
 					var myChart = new Chart(ctx, {
@@ -126,10 +126,10 @@
 					});
 					</script>
 				</div>
-				<div class="col s12">
-					<h5>C:\Windows\Firmware</h5>
-					<p class="center-align">Size: <span class="dirSize"></span></p>
-					<canvas id="dir2" width="100" height="80"></canvas>
+				<div id="toDirStats" class="col s12 animated fadeIn">
+					<h5 id="toDirName"></h5>
+					<p class="center-align">Size: <span class="dirSizeTo"></span></p>
+					<canvas id="dir2" width="100" height="70"></canvas>
 					<script>
 					var ctx = document.getElementById("dir2").getContext('2d');
 					var myChart = new Chart(ctx, {
