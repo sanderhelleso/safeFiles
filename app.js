@@ -111,6 +111,18 @@ function copyFiles(pathFrom, pathTo) {
 	});
 }
 
+/******************************************* 
+get directory and display directory stats
+*******************************************/
+ipcMain.on("directoryFrom:dir", function(e, path){
+	selectDirWindow.webContents.send("directoryFrom:dir", path);
+});
+
+ipcMain.on("directoryTo:dir", function(e, path){
+	selectDirWindow.webContents.send("directoryTo:dir", path);
+	console.log(path);
+});
+
 // menu template
 const mainMenuTemplate = [
 	{	// Menu item 1: Select Directory

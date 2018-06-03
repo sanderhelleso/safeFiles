@@ -56,16 +56,23 @@ function isDir(path) {
 	return !isFile(path);
 }
 
-function getDirStats() {
+let count = 0;
+function getDirStats(e) {
 	// check for valid dir path
 	if (validPath.test(this.value) && !isFile(this.value)) {
 		// check if dir is FROM / TO
 		if (this.id === "directoryFrom") {
-			console.log("from")
+			ipcRenderer.send("directoryFrom:dir", this.value);
+			ipcRenderer.on("directoryFrom:dir", function(e, path){
+				//console.log(path);
+			});
 		}
 
 		else {
-			console.log("to")
+			ipcRenderer.send("directoryTo:dir", this.value);
+			ipcRenderer.on("directoryTo:dir", function(e, path){
+				//console.log(path);
+			});
 		}
 		return;
 	}
