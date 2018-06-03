@@ -88,6 +88,7 @@ ipcMain.on("directoryFrom:path", function(e, path){
 	pathFrom = path;
 	mainWindow.webContents.send("directoryFrom:path", path);
 	selectDirWindow.close();
+	mainWindow.show();
 });
 
 // handler for to path

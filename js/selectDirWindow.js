@@ -17,30 +17,30 @@ function setDirectory(e) {
 	const pathFrom = document.querySelector("#directoryFrom").value;
 	const pathTo = document.querySelector("#directoryTo").value;
 
-	console.log(isFile(pathFrom));
-	console.log(isFile(pathTo));
+	// regex for valid path validation
+	const validPath = /^[a-zA-Z]:\\(\w+\\)*\w*$/;
 
 	if (pathFrom.length < 1) {
-		M.toast({html: 'Please select a FROM directory'});
+		M.toast({html: 'Please select a <span class="toastSpan">FROM</span> directory'});
+		return;
+	}
+
+	if (isFile(pathFrom) || !validPath.test(pathFrom)) {
+		M.toast({html: 'Directory path <span class="toastSpan">FROM</span> is not valid'});
 		return;
 	}
 
 	if (pathTo.length < 1) {
-		M.toast({html: 'Please select a TO directory'});
+		M.toast({html: 'Please select a <span class="toastSpan">TO</span> directory'});
 		return;
 	}
 
-	if (isFile(pathFrom)) {
-		M.toast({html: 'Directory path FROM is not valid'});
+	if (isFile(pathTo) || !validPath.test(pathTo)) {
+		M.toast({html: 'Directory path <span class="toastSpan">TO</span> is not valid'});
 		return;
 	}
 
-	if (isFile(pathTo)) {
-		M.toast({html: 'Directory path TO is not valid'});
-		return;
-	}
-
-	if (!isFile(pathFrom) && !isFile(pathTo)) {
+	if (!isFile(pathFrom) && !isFile(pathTo) && validPath.test(pathFrom) && validPath.test(pathTo)) {
 		ipcRenderer.send("directoryFrom:path", pathFrom);
 		ipcRenderer.send("directoryTo:path", pathTo);
 	}
