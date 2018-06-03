@@ -14,7 +14,7 @@
 	</div>
 	<div class="row">
 		<form id="mainCont" class="col s6">
-		    <div class="row">
+		    <div id="mainRow" class="row">
 		        <div class="input-field col s12">
 		          	<label for="directoryFrom">Select a directory you want to backup from</label>
 					<input id="directoryFrom" type="text" name="directoryFrom">
@@ -23,8 +23,40 @@
 			        <label for="directoryTo">Select a directory you want to backup to</label>
 					<input id="directoryTo" type="text" name="directoryTo">
 		        </div>
-		      </div>
-		      <button type="submit" class="waves-effect waves-light btn">Set backup</button>
+		      	</div>
+		      	<div id="buttons">
+		      		<p>
+					    <label>
+					      	<input class="with-gap" name="group1" type="radio"/>
+					      	<span>Every hour</span>
+					   	</label>
+					</p>
+			  		<p>
+					    <label>
+					      	<input class="with-gap" name="group1" type="radio"/>
+					      	<span>Every day</span>
+					   	</label>
+					</p>
+					<p>
+					    <label>
+					      	<input class="with-gap" name="group1" type="radio"/>
+					      	<span>Every 3 day</span>
+					   	</label>
+					</p>
+					<p>
+					    <label>
+					      	<input class="with-gap" name="group1" type="radio"/>
+					      	<span>Every 7 day</span>
+					   	</label>
+					</p>
+					<p>
+					    <label>
+					      	<input class="with-gap" name="group1" type="radio" checked/>
+					      	<span>On file change</span>
+					   	</label>
+					</p>
+				</div>
+		      	<button type="submit" class="waves-effect waves-light btn">Set backup</button>
 			</div>
 		</form>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>

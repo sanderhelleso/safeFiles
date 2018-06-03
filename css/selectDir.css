@@ -1,8 +1,8 @@
 #electron-titlebar {
 	background: linear-gradient(
-    rgba(20, 20, 20, 0.3), 
-    rgba(118, 0, 255, 0.3)),
-    url("../img/bg.jpg");
+    rgba(20, 20, 20, 0.9), 
+    rgba(118, 0, 255, 0.9)),
+    url("../img/bg2.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -24,6 +24,67 @@
 	letter-spacing: 2.5px;
 }
 
+body {
+	overflow: hidden;
+	font-family: 'Poiret One', cursive;
+	background: linear-gradient(
+    rgba(20, 20, 20, 0.9), 
+    rgba(118, 0, 255, 0.9)),
+    url("../img/bg2.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
 #mainCont {
 	margin-top: 7.5%;
+}
+
+#mainRow {
+	margin-bottom: 0;
+}
+
+#directoryTo {
+	margin-bottom: 0;
+}
+
+#buttons {
+	margin-top: 5px;
+	margin-bottom: 30px;
+}
+
+label {
+	color: #f5f5f5;
+	font-size: 18px;
+	letter-spacing: 2px;
+}
+
+.input-field>label {
+	color: #f5f5f5;
+	font-size: 16px;
+	letter-spacing: 2px;
+}
+
+input {
+	color: #f5f5f5;
+	font-family: 'Poiret One', cursive;
+	letter-spacing: 2px;
+	font-weight: 600;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #8c9eff !important;
+    box-shadow: 0 1px 0 0 #8c9eff !important;
+}
+
+[type="radio"]:not(:checked)+span:before, [type="radio"]:not(:checked)+span:after {
+    border: 2px solid #bdbdbd !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color: #f5f5f5 !important;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+    border: 2px solid #f5f5f5 !important;
 }
