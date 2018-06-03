@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="electron-titlebar" class="inset drag z-depth-3">
-		<div id="titlebar"><span id="title">safeFile</span></div>
+		<div id="titlebar"><span id="title">safeFiles</span></div>
 	</div>
 	<div class="row">
 		<div id="mainCont" class="col s9">
@@ -29,14 +29,14 @@
 					<h5>C:\saveFilesTestFolder</h5>
 					<p class="status"><i class="material-icons running">brightness_1</i>Running</p>
 					<a class="waves-effect waves-light btn btn-small startBackUpBtn disabledBtn z-depth-2"><i class="material-icons left">backup</i>start</a>
-					<a class="waves-effect waves-light btn btn-small stopBackUpBtn z-depth-2"><i class="material-icons left">pause</i>stop</a>
+					<a class="waves-effect waves-light btn btn-small stopBackUpBtn z-depth-2 hoverable"><i class="material-icons left">pause</i>stop</a>
 				</div>
 				<div class="backedUpDir">
 					<h5>C:\wamp\www\hangman</h5>
 					<i class="material-icons">autorenew</i>
 					<h5>C:\wamp\www\darkMode</h5>
 					<p class="status"><i class="material-icons stopped">brightness_1</i>Stopped</p>
-					<a class="waves-effect waves-light btn btn-small startBackUpBtn z-depth-2"><i class="material-icons left">backup</i>start</a>
+					<a class="waves-effect waves-light btn btn-small startBackUpBtn z-depth-2 hoverable"><i class="material-icons left">backup</i>start</a>
 					<a class="waves-effect waves-light btn btn-small stopBackUpBtn disabledBtn z-depth-2"><i class="material-icons left">pause</i>stop</a>
 				</div>
 				<div class="backedUpDir">
@@ -45,12 +45,13 @@
 					<h5>C:\wamp\www\examBackup</h5>
 					<p class="status"><i class="material-icons running">brightness_1</i>Running</p>
 					<a class="waves-effect waves-light btn btn-small startBackUpBtn disabledBtn z-depth-2"><i class="material-icons left">backup</i>start</a>
-					<a class="waves-effect waves-light btn btn-small stopBackUpBtn z-depth-2"><i class="material-icons left">pause</i>stop</a>
+					<a class="waves-effect waves-light btn btn-small stopBackUpBtn z-depth-2 hoverable"><i class="material-icons left">pause</i>stop</a>
 				</div>
 			</div>
 			</div>
 		</div>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 	<script type="text/javascript" src="js/mainWindow.js"></script>
 </body>
 </html>
