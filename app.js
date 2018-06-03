@@ -120,8 +120,38 @@ ipcMain.on("directoryFrom:dir", function(e, path){
 
 ipcMain.on("directoryTo:dir", function(e, path){
 	selectDirWindow.webContents.send("directoryTo:dir", path);
-	console.log(path);
+	getTotalSize(path);
 });
+
+// get total folder size
+let fileSizeInBytes = 0;
+function getTotalSize(pathToDir) {
+	fs.readdir(pathToDir, function(err, files) {	 	
+	    files.forEach(file => {
+	    	file = path.resolve(pathToDir, file), pathToDir + "/" + file;
+
+	    	// get fileSize
+	    	let stats = fs.statSync(file);
+	    	fileSizeInBytes += stats.size
+
+	    	// check if file is dir
+	    	let isDir = fs.lstatSync(file).isDirectory();
+	    	if (isDir) {
+	    		getTotalSize(file);
+	    	}
+	    });
+	});
+	bytesToSize(fileSizeInBytes);
+}
+
+// algo for converting bytes to corresponding byte type
+function bytesToSize(bytes) {
+   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+   if (bytes == 0) return '0 Byte';
+   let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+   console.log(Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i]);
+   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+};
 
 // menu template
 const mainMenuTemplate = [
