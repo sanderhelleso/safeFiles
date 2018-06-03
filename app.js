@@ -52,7 +52,8 @@ function createSelectDirWindow() {
 	selectDirWindow = new BrowserWindow({
 		width: 800,
 		height: 500,
-		title: "Select directory"
+		title: "Select directory",
+		frame: false
 	});
 
 	// load html into window

@@ -1,0 +1,29 @@
+#electron-titlebar {
+	background: linear-gradient(
+    rgba(20, 20, 20, 0.3), 
+    rgba(118, 0, 255, 0.3)),
+    url("../img/bg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	z-index: 100;
+}
+
+#titlebar {
+	width: 100%;
+	height: 100%;
+	line-height: 40px;
+}
+
+#titlebar #title {
+	margin-left: 15px;
+	color: white;
+	font-weight: 100;
+	font-size: 18px;
+	font-family: 'Megrim', cursive;
+	letter-spacing: 2.5px;
+}
+
+#mainCont {
+	margin-top: 7.5%;
+}

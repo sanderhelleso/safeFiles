@@ -32,6 +32,7 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	z-index: 100;
 }
 
 #titlebar {
@@ -127,6 +128,12 @@ body {
 	border-bottom: 0.5px solid #b388ff;
 }
 
+.backedUpDir .renewRunning {
+	-webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+
 #backedUpCont i {
 	color: #66bb6a;
 }
@@ -149,28 +156,29 @@ body {
 	opacity: 0.3;
 }
 
-#backedUpCont .running {
-	font-size: 20px;
-	margin-right: 5px;
-	position: relative;
-	/* Adjust these values accordingly */
-	top: 2.5px;
-	color: #66bb6a;
-}
-
-#backedUpCont .stopped {
-	font-size: 20px;
-	margin-right: 5px;
-	position: relative;
-	/* Adjust these values accordingly */
-	top: 2.5px;
-	color: #ef5350;
-}
-
-
 #backedUpCont .status {
 	font-size: 18px;
 	text-transform: uppercase;
 	font-family: 'Poiret One', cursive;
 	letter-spacing: 2px;
 }
+
+#backedUpCont .status i {
+	font-size: 20px;
+	margin-right: 5px;
+	position: relative;
+	top: 2.5px;
+}
+
+#backedUpCont .running {
+	color: #66bb6a;
+}
+
+#backedUpCont .stopped {
+	color: #ef5350;
+}
+
+/******************* ANIMATIONS *********************/
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
