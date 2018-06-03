@@ -21,7 +21,8 @@ app.on("ready", function() {
 	mainWindow = new BrowserWindow({
 		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
 		width: 1150,
-		height: 700
+		height: 600,
+		frame: false
 	});
 
 	// load html into window

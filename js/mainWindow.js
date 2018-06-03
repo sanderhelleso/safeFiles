@@ -2,6 +2,7 @@ window.onload = start;
 
 function start() {
 	const electron = require("electron");
+	const titleBar = require("electron-titlebar");
 	const {ipcRenderer} = electron;
 
 	ipcRenderer.on("directoryFrom:path", function(e, path){
@@ -14,6 +15,9 @@ function start() {
 
 	const fullScreen = document.querySelector("#fullScreen");
 	fullScreen.addEventListener("click", fullScreenMode);
+
+	document.querySelector(".button-img-minimize").remove();
+	document.querySelector(".button-img-close").remove();
 }
 
 let isFullScreen = false;

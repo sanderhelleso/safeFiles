@@ -39,9 +39,33 @@ body {
 	background-attachment: fixed;
 }
 
+#electron-titlebar {
+	background: linear-gradient(
+    rgba(20, 20, 20, 0.3), 
+    rgba(118, 0, 255, 0.3)),
+    url("../img/bg.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+#titlebar {
+	width: 100%;
+	height: 100%;
+	line-height: 40px;
+}
+
+#titlebar #title {
+	margin-left: 15px;
+	color: white;
+	font-size: 20px;
+}
+
 /********* MAIN CONTAINER ***********/
 #mainCont {
 	height: 100vh;
+	margin-top: 40px;
+	padding-bottom: 40px;
 }
 
 #mainHeading {
@@ -74,6 +98,8 @@ body {
 	color: white;
 	font-weight: 100;
 	overflow-y: auto;
+	margin-top: 40px;
+	padding-bottom: 40px;
 }
 
 #fullScreen {
