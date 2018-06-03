@@ -6,6 +6,7 @@ const electron = require("electron");
 const url = require("url");
 const path = require("path");
 const fs = require("fs-extra");
+require('events').EventEmitter.defaultMaxListeners = 0;
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -119,7 +120,6 @@ ipcMain.on("directoryFrom:dir", function(e, path){
 });
 
 ipcMain.on("directoryTo:dir", function(e, path){
-	selectDirWindow.webContents.send("directoryTo:dir", path);
 	getTotalSize(path);
 });
 
@@ -142,6 +142,9 @@ function getTotalSize(pathToDir) {
 	    });
 	});
 	bytesToSize(fileSizeInBytes);
+
+	selectDirWindow.webContents.send("directoryTo:dir", bytesToSize(fileSizeInBytes));
+	//console.log(bytesToSize(fileSizeInBytes));
 }
 
 // algo for converting bytes to corresponding byte type
@@ -149,7 +152,6 @@ function bytesToSize(bytes) {
    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
    if (bytes == 0) return '0 Byte';
    let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-   console.log(Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i]);
    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
 

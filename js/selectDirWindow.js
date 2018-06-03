@@ -6,12 +6,14 @@ const {ipcRenderer} = electron;
 function start() {
 	const form = document.querySelector("form");
 	form.addEventListener("submit", setDirectory);
-	document.querySelector("#directoryFrom").addEventListener("keyup", getDirStats);
-	document.querySelector("#directoryTo").addEventListener("keyup", getDirStats);
+	document.querySelector("#directoryFrom").addEventListener("input", getDirStats);
+	document.querySelector("#directoryTo").addEventListener("input", getDirStats);
 
 	// invert color of static titlebar imgs (black to white)
 	document.querySelector(".button-img-minimize").style.filter = "invert(100%)";
 	document.querySelector(".button-img-close").style.filter = "invert(100%)";
+
+	handleFileStats();
 }
 
 // regex for valid path validation
@@ -57,7 +59,8 @@ function isDir(path) {
 }
 
 let count = 0;
-function getDirStats(e) {
+function getDirStats() {
+
 	// check for valid dir path
 	if (validPath.test(this.value) && !isFile(this.value)) {
 		// check if dir is FROM / TO
@@ -76,4 +79,10 @@ function getDirStats(e) {
 		}
 		return;
 	}
+}
+
+function handleFileStats() {
+	ipcRenderer.on("directoryTo:dir", function(e, stats){
+		console.log(stats);
+	});
 }

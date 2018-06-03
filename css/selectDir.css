@@ -52,6 +52,11 @@ body {
 	font-size: 18px;
 }
 
+#sideCont p {
+	color: white;
+	font-size: 16px;
+}
+
 #mainRow {
 	margin-bottom: 0;
 }
