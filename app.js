@@ -144,7 +144,7 @@ function getTotalSize(pathToDir, dir) {
 
 	    	// get fileSize
 	    	let stats = fs.statSync(file);
-	    	if (fileExtsNames.indexOf(path.extname(file)) === -1 && path.extname(file) != "") {
+	    	if (fileExtsNames.indexOf(path.extname(file)) === -1) {
 	    		fileExtsNames.push(path.extname(file));
 	    	}
 

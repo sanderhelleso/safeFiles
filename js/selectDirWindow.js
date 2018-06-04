@@ -82,11 +82,22 @@ function getDirStats() {
 
 function handleFileStats() {
 	ipcRenderer.on("directoryFrom:dir", function(e, stats){
-		console.log(stats);
-		//document.querySelector(".dirSizeFrom").innerHTML = stats;
+		document.querySelector(".dirSizeFrom").innerHTML = stats[0];
+		stats[1][stats[1].indexOf("")] = "unknown";
+		myChart.data.labels = stats[1];
+		for (let i = 0; i < stats[2].length; i++) {
+			myChart.data.datasets[0].data[i] = stats[2][i];
+		}
+		myChart.update();
 	});
 
 	ipcRenderer.on("directoryTo:dir", function(e, stats){
-		document.querySelector(".dirSizeTo").innerHTML = stats;
+		document.querySelector(".dirSizeTo").innerHTML = stats[0];
+		stats[1][stats[1].indexOf("")] = "unknown";
+		myChart2.data.labels = stats[1];
+		for (let i = 0; i < stats[2].length; i++) {
+			myChart2.data.datasets[0].data[i] = stats[2][i];
+		}
+		myChart2.update();
 	});
 }
