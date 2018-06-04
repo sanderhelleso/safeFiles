@@ -98,19 +98,22 @@ ipcMain.on("directoryTo:path", function(e, path){
 	mainWindow.webContents.send("directoryTo:path", path[0]);
 
 	// run copy files
-	copyFiles(pathFrom, pathTo, millisecs);
+	copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
 });
 
 // functon to copy files from selected dirs
 function copyFiles(pathFrom, pathTo, millisecs) {
-	console.log(millisecs);
-	// read selected from directory
-	/*fs.readdir(pathFrom, function(err, files) {	 	
-	    files.forEach(file => {
-	    	// copy files from selected dirs
-	    	fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
-	    });
-	});*/
+	console.log(millisecs)
+	setInterval(function(){
+		console.log(123);
+		// read selected from directory
+		fs.readdir(pathFrom, function(err, files) {	 	
+	    	files.forEach(file => {
+	    		// copy files from selected dirs
+	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
+	    	});
+		});
+	}, millisecs);
 }
 
 /******************************************* 
