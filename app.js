@@ -94,22 +94,23 @@ ipcMain.on("directoryFrom:path", function(e, path){
 
 // handler for to path
 ipcMain.on("directoryTo:path", function(e, path){
-	pathTo = path;
-	mainWindow.webContents.send("directoryTo:path", path);
+	pathTo = path[0];
+	mainWindow.webContents.send("directoryTo:path", path[0]);
 
 	// run copy files
-	copyFiles(pathFrom, pathTo);
+	copyFiles(pathFrom, pathTo, millisecs);
 });
 
 // functon to copy files from selected dirs
-function copyFiles(pathFrom, pathTo) {
+function copyFiles(pathFrom, pathTo, millisecs) {
+	console.log(millisecs);
 	// read selected from directory
-	fs.readdir(pathFrom, function(err, files) {	 	
+	/*fs.readdir(pathFrom, function(err, files) {	 	
 	    files.forEach(file => {
 	    	// copy files from selected dirs
 	    	fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    });
-	});
+	});*/
 }
 
 /******************************************* 
@@ -192,10 +193,10 @@ function getTotalSize(pathToDir, dir) {
 
 // algo for converting bytes to corresponding byte type
 function bytesToSize(bytes) {
-   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-   if (bytes == 0) return '0 Byte';
-   let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+   	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+   	if (bytes == 0) return '0 Byte';
+  	let i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+   	return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 };
 
 // menu template

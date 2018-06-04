@@ -23,6 +23,7 @@ function setDirectory(e) {
 	e.preventDefault();
 	const pathFrom = document.querySelector("#directoryFrom").value;
 	const pathTo = document.querySelector("#directoryTo").value;
+	const millisecs = document.querySelector('input[name="group1"]:checked').value;
 
 	if (pathFrom.length < 1) {
 		M.toast({html: 'Please select a <span class="toastSpan">FROM</span> directory'});
@@ -46,7 +47,7 @@ function setDirectory(e) {
 
 	if (!isFile(pathFrom) && !isFile(pathTo) && validPath.test(pathFrom) && validPath.test(pathTo)) {
 		ipcRenderer.send("directoryFrom:path", pathFrom);
-		ipcRenderer.send("directoryTo:path", pathTo);
+		ipcRenderer.send("directoryTo:path", [pathTo, millisecs]);
 	}
 }
 
