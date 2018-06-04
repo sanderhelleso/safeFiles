@@ -97,11 +97,11 @@ ipcMain.on("directoryTo:path", function(e, path){
 	pathTo = path[0];
 	mainWindow.webContents.send("directoryTo:path", path[0]);
 
-	// run copy files
+	// run copy files with from path, to path and the amount of millisecs
 	copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
 });
 
-// functon to copy files from selected dirs
+// functon to copy files from selected dirs, run on parameter millisecs
 function copyFiles(pathFrom, pathTo, millisecs) {
 	console.log(millisecs)
 	setInterval(function(){
