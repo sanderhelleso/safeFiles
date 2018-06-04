@@ -138,7 +138,13 @@ let fileSizeInBytes = 0;
 let fileExtsNames = [];
 let fileExtsNamesCount = [];
 function getTotalSize(pathToDir, dir) {
-	fs.readdir(pathToDir, function(err, files) {	 	
+	fs.readdir(pathToDir, function(err, files) {
+		if (err) {
+			throw new Error('something bad happened');
+			return;
+		}
+
+		// check every file in directory	 	
 	    files.forEach(file => {
 	    	file = path.resolve(pathToDir, file), pathToDir + "/" + file;
 
@@ -174,10 +180,6 @@ function getTotalSize(pathToDir, dir) {
 	    });
 	});
 	bytesToSize(fileSizeInBytes);
-
-	console.log(fileExtsNames);
-	console.log(fileExtsNamesCount);
-
 
 	if (dir === "from") {
 		selectDirWindow.webContents.send("directoryFrom:dir", [bytesToSize(fromDirSize), fileExtsNames, fileExtsNamesCount]);
