@@ -135,6 +135,16 @@ body {
     animation:spin 4s linear infinite;
 }
 
+.backedUpDir .countdown {
+	letter-spacing: 3px;
+	font-size: 20px;
+	margin-left: 15px;
+}
+
+.backedUpDir .countdown span {
+	font-size: 14px;
+}
+
 #backedUpCont i {
 	color: #66bb6a;
 }

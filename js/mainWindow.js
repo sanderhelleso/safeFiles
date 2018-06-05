@@ -68,6 +68,7 @@ function start() {
 
 		console.log(backUpDiv.childNodes);
 		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(parseInt(path[1]) * 1000);
+		countdown(parseInt(path[1]) * 1000);
 	});
 
 	// fullscreen menu toggle
@@ -141,22 +142,22 @@ function convertMillisecs(millisecs) {
 	return days + "<span>d </span>" + hours + "<span>h </span>" + mins + "<span>m </span>" + secs + "<span>s </span>";
 };
 
-/*function countdown() {
-    var days        = Math.floor(seconds/24/60/60);
-    var hoursLeft   = Math.floor((seconds) - (days*86400));
-    var hours       = Math.floor(hoursLeft/3600);
-    var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
-    var minutes     = Math.floor(minutesLeft/60);
-    var remainingSeconds = seconds % 60;
-    if (remainingSeconds < 10) {
-        remainingSeconds = "0" + remainingSeconds; 
-    }
-    document.getElementById('countdown').innerHTML = days + ":" + hours + ":" + minutes + ":" + remainingSeconds;
-    if (seconds == 0) {
-        clearInterval(countdownTimer);
-        document.getElementById('countdown').innerHTML = "Completed";
-    } else {
-        seconds--;
-    }
+// Update the count down every 1 second
+function countdown(millisecs) {
+	setInterval(function() {
+
+		var time = new Date().getTime() + millisecs;
+		var date = new Date(time);
+		console.log(date.toString()); // Wed Jan 12 2011 12:42:46 GMT-0800 (PST)
+
+	  	/*// Time calculations for days, hours, minutes and seconds
+	  	var days = Math.floor(millisecs / (1000 * 60 * 60 * 24));
+	  	var hours = Math.floor((millisecs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	  	var minutes = Math.floor((millisecs % (1000 * 60 * 60)) / (1000 * 60));
+	  	var seconds = Math.floor((millisecs % (1000 * 60)) / 1000);
+
+	  	// Display the result in the element with id="demo"
+	  	document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+	  	+ minutes + "m " + seconds + "s ";*/
+	}, 1000);
 }
-var countdownTimer = setInterval(countdown(), 1000);*/
