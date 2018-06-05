@@ -98,10 +98,25 @@ function fullScreenMode() {
 
 // stop selected backup
 function stopBackUp() {
-	console.log(123);
+	this.removeEventListener("click", stopBackUp);
+	this.classList.add("disabledBtn");
+	this.parentElement.childNodes[1].classList.remove("renewRunning");
+	this.parentElement.childNodes[3].innerHTML = "<i class='material-icons stopped'>brightness_1</i><span>Stopped</span></p>";
+
+	const startBtn = this.parentElement.childNodes[4];
+	startBtn.classList.remove("disabledBtn");
+	startBtn.addEventListener("click", startBackUp);
 }
 
 // start selected backup
 function startBackUp() {
-	console.log(321);
+	this.removeEventListener("click", startBackUp);
+	this.classList.add("disabledBtn");
+	this.parentElement.childNodes[1].classList.add("renewRunning");
+	this.parentElement.childNodes[3].innerHTML = "<i class='material-icons running'>brightness_1</i><span>Running</span></p>";
+
+
+	const stopBtn = this.parentElement.childNodes[5];
+	stopBtn.classList.remove("disabledBtn");
+	stopBtn.addEventListener("click", stopBackUp);
 }
