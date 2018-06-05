@@ -123,7 +123,8 @@ body {
 }
 
 .backedUpDir {
-	margin-top: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	padding-bottom: 30px;
 	border-bottom: 0.5px solid #b388ff;
 }
@@ -150,6 +151,7 @@ body {
 #backedUpCont .startBackUpBtn {
 	background-color: #4db6ac;
 	font-weight: 100;
+	margin-right: 5px;
 }
 
 #backedUpCont .disabledBtn {
