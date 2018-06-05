@@ -7,6 +7,7 @@ const url = require("url");
 const path = require("path");
 const fs = require("fs-extra");
 require('events').EventEmitter.defaultMaxListeners = 0;
+process.on("uncaughtException", (err) => {});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -105,9 +106,14 @@ ipcMain.on("directoryTo:path", function(e, path){
 function copyFiles(pathFrom, pathTo, millisecs) {
 	console.log(millisecs)
 	setInterval(function(){
-		console.log(123);
+		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
-		fs.readdir(pathFrom, function(err, files) {	 	
+		fs.readdir(pathFrom, function(err, files) {
+			if (err) {
+				console.log(err);
+				throw err;
+			}
+
 	    	files.forEach(file => {
 	    		// copy files from selected dirs
 	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
@@ -144,7 +150,7 @@ let fileExtsNamesCount = [];
 function getTotalSize(pathToDir, dir) {
 	fs.readdir(pathToDir, function(err, files) {
 		if (err) {
-			throw new Error('something bad happened');
+			throw err;
 			return;
 		}
 
