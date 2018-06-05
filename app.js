@@ -96,7 +96,7 @@ ipcMain.on("directoryFrom:path", function(e, path){
 // handler for to path
 ipcMain.on("directoryTo:path", function(e, path){
 	pathTo = path[0];
-	mainWindow.webContents.send("directoryTo:path", pathTo);
+	mainWindow.webContents.send("directoryTo:path", path);
 
 	// run copy files with from path, to path and the amount of millisecs
 	copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);

@@ -17,13 +17,18 @@ function start() {
 		fromDir.innerHTML = path;
 
 		// icon
+		const timer = document.createElement("p");
+		const countdown = document.createElement("span");
 		const icon = document.createElement("i");
 		icon.className = "material-icons renewRunning";
 		icon.innerHTML = "autorenew";
+		countdown.className = "countdown";
+		timer.appendChild(icon);
+		timer.appendChild(countdown);
 
 		// append to backup container
 		backUpDiv.appendChild(fromDir);
-		backUpDiv.appendChild(icon);
+		backUpDiv.appendChild(timer);
 
 		// display in main window
 		document.querySelector("#backedUpCont").appendChild(backUpDiv);
@@ -34,7 +39,7 @@ function start() {
 
 		// to dir
 		const toDir = document.createElement("h5");
-		toDir.innerHTML = path;
+		toDir.innerHTML = path[0];
 
 		// status | RUNNING / STOPPED
 		const status = document.createElement("p");
@@ -60,6 +65,9 @@ function start() {
 		backUpDiv.appendChild(status);
 		backUpDiv.appendChild(startBtn);
 		backUpDiv.appendChild(stopBtn);
+
+		console.log(backUpDiv.childNodes);
+		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(parseInt(path[1]) * 1000);
 	});
 
 	// fullscreen menu toggle
@@ -100,7 +108,7 @@ function fullScreenMode() {
 function stopBackUp() {
 	this.removeEventListener("click", stopBackUp);
 	this.classList.add("disabledBtn");
-	this.parentElement.childNodes[1].classList.remove("renewRunning");
+	this.parentElement.childNodes[1].childNodes[0].classList.remove("renewRunning");
 	this.parentElement.childNodes[3].innerHTML = "<i class='material-icons stopped'>brightness_1</i><span>Stopped</span></p>";
 
 	const startBtn = this.parentElement.childNodes[4];
@@ -112,7 +120,7 @@ function stopBackUp() {
 function startBackUp() {
 	this.removeEventListener("click", startBackUp);
 	this.classList.add("disabledBtn");
-	this.parentElement.childNodes[1].classList.add("renewRunning");
+	this.parentElement.childNodes[1].childNodes[0].classList.add("renewRunning");
 	this.parentElement.childNodes[3].innerHTML = "<i class='material-icons running'>brightness_1</i><span>Running</span></p>";
 
 
@@ -120,3 +128,35 @@ function startBackUp() {
 	stopBtn.classList.remove("disabledBtn");
 	stopBtn.addEventListener("click", stopBackUp);
 }
+
+function convertMillisecs(millisecs) {
+	let days, hours, mins, secs;
+	secs = Math.floor(millisecs / 1000);
+	mins = Math.floor(secs / 60);
+	secs = secs % 60;
+	hours = Math.floor(mins / 60);
+	mins = mins % 60;
+	days = Math.floor(hours / 24);
+	hours = hours % 24;
+	return days + "<span>d </span>" + hours + "<span>h </span>" + mins + "<span>m </span>" + secs + "<span>s </span>";
+};
+
+/*function countdown() {
+    var days        = Math.floor(seconds/24/60/60);
+    var hoursLeft   = Math.floor((seconds) - (days*86400));
+    var hours       = Math.floor(hoursLeft/3600);
+    var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
+    var minutes     = Math.floor(minutesLeft/60);
+    var remainingSeconds = seconds % 60;
+    if (remainingSeconds < 10) {
+        remainingSeconds = "0" + remainingSeconds; 
+    }
+    document.getElementById('countdown').innerHTML = days + ":" + hours + ":" + minutes + ":" + remainingSeconds;
+    if (seconds == 0) {
+        clearInterval(countdownTimer);
+        document.getElementById('countdown').innerHTML = "Completed";
+    } else {
+        seconds--;
+    }
+}
+var countdownTimer = setInterval(countdown(), 1000);*/
