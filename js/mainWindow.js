@@ -10,7 +10,7 @@ function start() {
 
 		// create the backup container
 		const backUpDiv = document.createElement("div");
-		backUpDiv.className = "backedUpDir";
+		backUpDiv.className = "backedUpDir animated fadeIn";
 
 		// from dir
 		const fromDir = document.createElement("h5");
@@ -43,13 +43,14 @@ function start() {
 
 		// start button
 		const startBtn = document.createElement("a");
-		startBtn.className = "waves-effect waves-light btn btn-small startBackUpBtn z-depth-2 hoverable";
+		startBtn.className = "waves-effect waves-light btn btn-small startBackUpBtn disabledBtn z-depth-2 hoverable";
 		startBtn.innerHTML = "<i class='material-icons left'>backup</i>start";
 
 		// stop button
 		const stopBtn = document.createElement("a");
-		stopBtn.className = "waves-effect waves-light btn btn-small stopBackUpBtn disabledBtn z-depth-2 hoverable";
+		stopBtn.className = "waves-effect waves-light btn btn-small stopBackUpBtn z-depth-2 hoverable";
 		stopBtn.innerHTML = "<i class='material-icons left'>pause</i>stop";
+		stopBtn.addEventListener("click", stopBackUp);
 
 		// get the backup container created in directoryFrom:path
 		const backUpDiv = document.querySelector("#backedUpCont").childNodes[document.querySelector("#backedUpCont").childNodes.length - 1];
@@ -93,4 +94,14 @@ function fullScreenMode() {
 		isFullScreen = false;
 		return;
 	}
+}
+
+// stop selected backup
+function stopBackUp() {
+	console.log(123);
+}
+
+// start selected backup
+function startBackUp() {
+	console.log(321);
 }
