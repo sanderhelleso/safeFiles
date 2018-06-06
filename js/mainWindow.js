@@ -24,9 +24,6 @@ function start() {
 		icon.innerHTML = "autorenew";
 		countdown.className = "countdown";
 
-		// set random id to coutdown element
-		countdown.id = idGenerator(countdown);
-
 		timer.appendChild(icon);
 		timer.appendChild(countdown);
 
@@ -70,10 +67,19 @@ function start() {
 		backUpDiv.appendChild(startBtn);
 		backUpDiv.appendChild(stopBtn);
 
-		console.log(backUpDiv.childNodes);
-		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(parseInt(path[1]) * 1000);
-		countdownValues.push(parseInt(path[1]) * 1000)
-		countdown(countdownValues[0], backUpDiv.childNodes[1].childNodes[1]);
+		//  hidden ele to keep trac of its timer
+		let hiddenTimer = document.createElement("span");
+		hiddenTimer.style.display = "none";
+		// set random id to coutdown element
+		hiddenTimer.id = idGenerator(hiddenTimer);
+		hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
+		// add hidden timer to DOM
+		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML * 1000);
+		// push hidden timer ele with its innerHTML as countdown value
+		countdownValues.push(hiddenTimer)
+
+		// always run last timer added to array
+		countdown(countdownValues[countdownValues.length - 1], backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
 	});
 
 	// fullscreen menu toggle
@@ -149,7 +155,7 @@ function convertMillisecs(millisecs) {
 
 // Update the count down every 1 second
 let countdownValues = [];
-function countdown(millisecs, ele) {
+function countdown(millisecs, ele, id) {
 	setInterval(function() {
 		console.log(ele.id);
 		millisecs = countdownValues[0];
