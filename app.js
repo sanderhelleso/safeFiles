@@ -159,7 +159,7 @@ function getTotalSize(pathToDir, dir) {
 	    files.forEach(file => {
 	    	file = path.resolve(pathToDir, file), pathToDir + "/" + file;
 
-	    	// get fileSize
+	    	// get fileSize 
 	    	let stats = fs.statSync(file);
 	    	if (fileExtsNames.indexOf(path.extname(file)) === -1) {
 	    		fileExtsNames.push(path.extname(file));
