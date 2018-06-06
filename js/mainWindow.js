@@ -23,6 +23,10 @@ function start() {
 		icon.className = "material-icons renewRunning";
 		icon.innerHTML = "autorenew";
 		countdown.className = "countdown";
+
+		// set random id to coutdown element
+		countdown.id = idGenerator(countdown);
+
 		timer.appendChild(icon);
 		timer.appendChild(countdown);
 
@@ -146,8 +150,6 @@ function convertMillisecs(millisecs) {
 // Update the count down every 1 second
 let countdownValues = [];
 function countdown(millisecs, ele) {
-	// set random id to coutdown element
-	ele.id = idGenerator(ele);
 	setInterval(function() {
 		console.log(ele.id);
 		millisecs = countdownValues[0];
