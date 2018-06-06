@@ -71,11 +71,12 @@ function start() {
 		let hiddenTimer = document.createElement("span");
 		hiddenTimer.style.display = "none";
 		// set random id to coutdown element
-		idGenerator(hiddenTimer);
+		hiddenTimer.id = idGenerator();
 		hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
 		// add hidden timer to DOM
 		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML * 1000);
 		// push hidden timer ele with its innerHTML as countdown value
+		backUpDiv.appendChild(hiddenTimer);
 		countdownValues.push(hiddenTimer);
 
 		// always run last timer added to array
@@ -156,21 +157,13 @@ function convertMillisecs(millisecs) {
 // Update the count down every 1 second
 let countdownValues = [];
 function countdown(millisecs, ele, id) {
-	console.log(countdownValues);
-	console.log(id);
-	console.log(parseInt(millisecs));
 	setInterval(function() {
 
 		// find selected countdown
-		countdownValues.forEach(ele => {
-			if (ele.id = id) {
-				millisecs = parseInt(ele.innerHTML);
-			}
-		});
+		let currentCountdown = parseInt(countdownValues.indexOf(document.getElementById(id)));
+		millisecs = parseInt(countdownValues[currentCountdown].innerHTML);
 
-		console.log(millisecs);
-
-	  	/*// Time calculations for days, hours, minutes and seconds
+	  	// Time calculations for days, hours, minutes and seconds
 	  	var days = Math.floor(millisecs / (1000 * 60 * 60 * 24));
 	  	var hours = Math.floor((millisecs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	  	var minutes = Math.floor((millisecs % (1000 * 60 * 60)) / (1000 * 60));
@@ -179,14 +172,15 @@ function countdown(millisecs, ele, id) {
 	  	// Display the result in the element with id="demo"
 	  	ele.innerHTML = days + "d " + hours + "h "
 	  	+ minutes + "m " + seconds + "s ";
-	  	countdownValues[0] = countdownValues[0] - 1000;
-	  	*/
+
+	  	// reduce by 1000 every interval
+	  	countdownValues[currentCountdown].innerHTML = parseInt(countdownValues[currentCountdown].innerHTML) - 1000;
 	}, 1000);
 }
 
-function idGenerator(ele) {
+function idGenerator() {
     let id = function() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
-    ele.id = (id() + id() + "-" + id() + "-" + id() + "-" + id() + "-" + id() + id() + id());
+    return (id() + id() + "-" + id() + "-" + id() + "-" + id() + "-" + id() + id() + id());
 }

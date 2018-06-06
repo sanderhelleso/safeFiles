@@ -106,7 +106,7 @@ ipcMain.on("directoryTo:path", function(e, path){
 function copyFiles(pathFrom, pathTo, millisecs) {
 	console.log(millisecs);
 
-	/*setInterval(function(){
+	setInterval(function(){
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
 		fs.readdir(pathFrom, function(err, files) {
@@ -120,7 +120,7 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    	});
 		});
-	}, millisecs);*/
+	}, millisecs);
 }
 
 /******************************************* 
