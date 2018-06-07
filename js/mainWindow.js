@@ -80,7 +80,7 @@ function start() {
 		countdownValues.push(hiddenTimer);
 
 		// always run last timer added to array
-		countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
+		startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
 	});
 
 	// fullscreen menu toggle
@@ -127,6 +127,13 @@ function stopBackUp() {
 	const startBtn = this.parentElement.childNodes[4];
 	startBtn.classList.remove("disabledBtn");
 	startBtn.addEventListener("click", startBackUp);
+
+	// pause countdown
+	console.log(this.parentElement.childNodes);
+	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
+	let ele = this.parentElement.childNodes[1].childNodes[1];
+	let id = this.parentElement.childNodes[6].id;
+	clearInterval(startCountdown);
 }
 
 // start selected backup
@@ -156,8 +163,9 @@ function convertMillisecs(millisecs) {
 
 // Update the count down every 1 second
 let countdownValues = [];
+let startCountdown;
 function countdown(millisecs, ele, id) {
-	setInterval(function() {
+	return setInterval(function() {
 
 		// find selected countdown
 		let currentCountdown = parseInt(countdownValues.indexOf(document.getElementById(id)));
