@@ -109,7 +109,7 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	setInterval(function(){
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
-		fs.readdir(pathFrom, function(err, files) {
+		/*fs.readdir(pathFrom, function(err, files) {
 			if (err) {
 				console.log(err);
 				throw err;
@@ -119,7 +119,7 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	    		// copy files from selected dirs
 	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    	});
-		});
+		});*/
 	}, millisecs);
 }
 

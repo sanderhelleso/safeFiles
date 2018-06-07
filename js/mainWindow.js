@@ -74,7 +74,7 @@ function start() {
 		hiddenTimer.id = idGenerator();
 		hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
 		// add hidden timer to DOM
-		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML * 1000);
+		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML);
 		// push hidden timer ele with its innerHTML as countdown value
 		backUpDiv.appendChild(hiddenTimer);
 		countdownValues.push(hiddenTimer);
@@ -161,7 +161,7 @@ function countdown(millisecs, ele, id) {
 
 		// find selected countdown
 		let currentCountdown = parseInt(countdownValues.indexOf(document.getElementById(id)));
-		millisecs = parseInt(countdownValues[currentCountdown].innerHTML);
+		millisecs = parseInt(countdownValues[currentCountdown].innerHTML) - 1000;
 
 	  	// Time calculations for days, hours, minutes and seconds
 	  	var days = Math.floor(millisecs / (1000 * 60 * 60 * 24));
