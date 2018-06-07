@@ -1,5 +1,6 @@
 window.onload = start;
 
+let backUpCounter = 0;
 function start() {
 	const electron = require("electron");
 	const titleBar = require("electron-titlebar");
@@ -11,6 +12,8 @@ function start() {
 		// create the backup container
 		const backUpDiv = document.createElement("div");
 		backUpDiv.className = "backedUpDir animated fadeIn";
+		backUpDiv.id = "backup-" + backUpCounter;
+		backUpCounter++;
 
 		// from dir
 		const fromDir = document.createElement("h5");
@@ -80,7 +83,8 @@ function start() {
 		countdownValues.push(hiddenTimer);
 
 		// always run last timer added to array
-		startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
+		let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
+		runningCountdowns.push(startCountdown);
 	});
 
 	// fullscreen menu toggle
@@ -129,11 +133,7 @@ function stopBackUp() {
 	startBtn.addEventListener("click", startBackUp);
 
 	// pause countdown
-	console.log(this.parentElement.childNodes);
-	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
-	let ele = this.parentElement.childNodes[1].childNodes[1];
-	let id = this.parentElement.childNodes[6].id;
-	clearInterval(startCountdown);
+	clearInterval(runningCountdowns[parseInt(this.parentElement.id.split("-")[1])]);
 }
 
 // start selected backup
@@ -147,6 +147,12 @@ function startBackUp() {
 	const stopBtn = this.parentElement.childNodes[5];
 	stopBtn.classList.remove("disabledBtn");
 	stopBtn.addEventListener("click", stopBackUp);
+
+	// resume countdown
+	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
+	let ele = this.parentElement.childNodes[1].childNodes[1];
+	let id = this.parentElement.childNodes[6].id;
+	runningCountdowns[parseInt(this.parentElement.id.split("-")[1])] = countdown(millisecs, ele, id);
 }
 
 function convertMillisecs(millisecs) {
@@ -163,7 +169,7 @@ function convertMillisecs(millisecs) {
 
 // Update the count down every 1 second
 let countdownValues = [];
-let startCountdown;
+let runningCountdowns = [];
 function countdown(millisecs, ele, id) {
 	return setInterval(function() {
 
