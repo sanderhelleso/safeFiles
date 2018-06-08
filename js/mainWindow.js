@@ -83,7 +83,7 @@ function start() {
 		countdownValues.push(hiddenTimer);
 
 		// always run last timer added to array
-		let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id);
+		let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id, parseInt(path[1]) * 1000);
 		runningCountdowns.push(startCountdown);
 	});
 
@@ -170,7 +170,7 @@ function convertMillisecs(millisecs) {
 // Update the count down every 1 second
 let countdownValues = [];
 let runningCountdowns = [];
-function countdown(millisecs, ele, id) {
+function countdown(millisecs, ele, id, original) {
 	return setInterval(function() {
 
 		// find selected countdown
@@ -180,12 +180,17 @@ function countdown(millisecs, ele, id) {
 	  	// Time calculations for days, hours, minutes and seconds
 	  	var days = Math.floor(millisecs / (1000 * 60 * 60 * 24));
 	  	var hours = Math.floor((millisecs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-	  	var minutes = Math.floor((millisecs % (1000 * 60 * 60)) / (1000 * 60));
-	  	var seconds = Math.floor((millisecs % (1000 * 60)) / 1000);
+	  	var mins = Math.floor((millisecs % (1000 * 60 * 60)) / (1000 * 60));
+	  	var secs = Math.floor((millisecs % (1000 * 60)) / 1000);
 
 	  	// Display the result in the element with id="demo"
-	  	ele.innerHTML = days + "d " + hours + "h "
-	  	+ minutes + "m " + seconds + "s ";
+	  	ele.innerHTML = days + "<span>d </span>" + hours + "<span>h </span>" + mins + "<span>m </span>" + secs + "<span>s </span>";
+
+	  	// reset to orginal value when timer is done
+	  	if (parseInt(countdownValues[currentCountdown].innerHTML) === 1000) {
+	  		countdownValues[currentCountdown].innerHTML = original;
+	  	}
+
 
 	  	// reduce by 1000 every interval
 	  	countdownValues[currentCountdown].innerHTML = parseInt(countdownValues[currentCountdown].innerHTML) - 1000;
