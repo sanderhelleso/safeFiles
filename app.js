@@ -98,8 +98,15 @@ ipcMain.on("directoryTo:path", function(e, path){
 	pathTo = path[0];
 	mainWindow.webContents.send("directoryTo:path", path);
 
-	// run copy files with from path, to path and the amount of millisecs
-	copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
+	if (path[1] != "On file change") {
+		// run copy files with from path, to path and the amount of millisecs
+		copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
+	}
+
+	else {
+		// run file watcher
+		fileWatcher(pathFrom, pathTo);
+	}
 });
 
 // functon to copy files from selected dirs, run on parameter millisecs
@@ -107,7 +114,7 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	console.log(millisecs);
 
 	setInterval(function(){
-		console.log("Copyed a file at: " + new Date());
+		//console.log("Copyed a file at: " + new Date());
 		// read selected from directory
 		/*fs.readdir(pathFrom, function(err, files) {
 			if (err) {
@@ -121,6 +128,11 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	    	});
 		});*/
 	}, millisecs);
+}
+
+// watch files for change
+function fileWatcher(pathFrom, pathToDir) {
+	
 }
 
 /******************************************* 
