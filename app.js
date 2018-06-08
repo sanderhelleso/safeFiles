@@ -166,7 +166,7 @@ function getTotalSize(pathToDir, dir) {
 	    	}
 
 	    	fileExtsNamesCount.length = fileExtsNames.length;
-	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] === undefined) {
+	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] === undefined && path.extname(file) != "") {
 	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = 1;
 	    	}
 
