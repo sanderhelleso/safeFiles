@@ -75,11 +75,16 @@ function start() {
 		//  hidden ele to keep trac of its timer
 		let hiddenTimer = document.createElement("span");
 		hiddenTimer.style.display = "none";
+
 		// set random id to coutdown element
 		hiddenTimer.id = idGenerator();
+
 		if (path[1] != "watch") {
 			hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
 			backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML);
+			// push hidden timer ele with its innerHTML as countdown value
+			backUpDiv.appendChild(hiddenTimer);
+			countdownValues.push(hiddenTimer);
 			// always run last timer added to array
 			let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id, parseInt(path[1]) * 1000);
 			runningCountdowns.push(startCountdown);
@@ -88,13 +93,12 @@ function start() {
 		else {
 			hiddenTimer.innerHTML = "On file change";
 			backUpDiv.childNodes[1].childNodes[1].innerHTML = "On file change";
+			// push hidden timer ele with its innerHTML as countdown value
+			backUpDiv.appendChild(hiddenTimer);
+			countdownValues.push(hiddenTimer);
 			let startCountdown = "On file change";
 			runningCountdowns.push(startCountdown);
 		}
-
-		// push hidden timer ele with its innerHTML as countdown value
-		backUpDiv.appendChild(hiddenTimer);
-		countdownValues.push(hiddenTimer);
 	});
 
 	// fullscreen menu toggle
@@ -205,7 +209,7 @@ function countdown(millisecs, ele, id, original) {
 
 	  	// reset to orginal value when timer is done
 	  	if (parseInt(countdownValues[currentCountdown].innerHTML) === 1000) {
-	  		countdownValues[currentCountdown].innerHTML = original;
+	  		countdownValues[currentCountdown].innerHTML = original + 1000;
 	  	}
 
 
