@@ -70,21 +70,31 @@ function start() {
 		backUpDiv.appendChild(startBtn);
 		backUpDiv.appendChild(stopBtn);
 
+		console.log(path[1]);
+
 		//  hidden ele to keep trac of its timer
 		let hiddenTimer = document.createElement("span");
 		hiddenTimer.style.display = "none";
 		// set random id to coutdown element
 		hiddenTimer.id = idGenerator();
-		hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
-		// add hidden timer to DOM
-		backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML);
+		if (path[1] != "watch") {
+			hiddenTimer.innerHTML = parseInt(path[1]) * 1000;
+			backUpDiv.childNodes[1].childNodes[1].innerHTML = convertMillisecs(hiddenTimer.innerHTML);
+			// always run last timer added to array
+			let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id, parseInt(path[1]) * 1000);
+			runningCountdowns.push(startCountdown);
+		}
+
+		else {
+			hiddenTimer.innerHTML = "On file change";
+			backUpDiv.childNodes[1].childNodes[1].innerHTML = "On file change";
+			let startCountdown = "On file change";
+			runningCountdowns.push(startCountdown);
+		}
+
 		// push hidden timer ele with its innerHTML as countdown value
 		backUpDiv.appendChild(hiddenTimer);
 		countdownValues.push(hiddenTimer);
-
-		// always run last timer added to array
-		let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id, parseInt(path[1]) * 1000);
-		runningCountdowns.push(startCountdown);
 	});
 
 	// fullscreen menu toggle
@@ -147,6 +157,11 @@ function startBackUp() {
 	const stopBtn = this.parentElement.childNodes[5];
 	stopBtn.classList.remove("disabledBtn");
 	stopBtn.addEventListener("click", stopBackUp);
+
+	// stop function if countdown is not set
+	if (this.parentElement.childNodes[6].innerHTML === "On file change") {
+		return;
+	}
 
 	// resume countdown
 	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
