@@ -98,7 +98,8 @@ ipcMain.on("directoryTo:path", function(e, path){
 	pathTo = path[0];
 	mainWindow.webContents.send("directoryTo:path", path);
 
-	if (path[1] != "On file change") {
+	if (path[1] != "watch") {
+		console.log(path[1]);
 		// run copy files with from path, to path and the amount of millisecs
 		copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
 	}
@@ -131,8 +132,15 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 }
 
 // watch files for change
-function fileWatcher(pathFrom, pathToDir) {
-	
+function fileWatcher(pathFrom, pathTo) {
+	fs.watch(pathFrom, function (event, file) {
+	    if (file) {
+	    	fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
+	        console.log('filename provided: ' + file);
+	    } else {
+	        console.log('filename not provided');
+	    }
+	});
 }
 
 /******************************************* 
