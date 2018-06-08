@@ -133,13 +133,31 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 
 // watch files for change
 function fileWatcher(pathFrom, pathTo) {
+	let running = true;
+	ipcMain.on("stopBackUp:mode", function(e, mode) {
+		running = mode;
+		console.log(running);
+	});
+
+	// watch directory
 	fs.watch(pathFrom, function (event, file) {
-	    if (file) {
-	    	fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
-	        console.log('filename provided: ' + file);
-	    } else {
-	        console.log('filename not provided');
-	    }
+		if (file) {
+			// if running copy files
+			if (running) {
+				fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
+		    	console.log('filename provided: ' + file);
+			}
+
+			// if not exit from function
+			else {
+				return;
+			}
+		} 
+
+		// @TODO: some error handling here i guess
+		else {
+		    console.log('filename not provided');
+		}
 	});
 }
 

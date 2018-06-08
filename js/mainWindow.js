@@ -1,10 +1,10 @@
 window.onload = start;
 
 let backUpCounter = 0;
+const electron = require("electron");
+const titleBar = require("electron-titlebar");
+const {ipcRenderer} = electron;
 function start() {
-	const electron = require("electron");
-	const titleBar = require("electron-titlebar");
-	const {ipcRenderer} = electron;
 
 	// get from directory data
 	ipcRenderer.on("directoryFrom:path", function(e, path){
@@ -143,6 +143,7 @@ function stopBackUp() {
 	startBtn.addEventListener("click", startBackUp);
 
 	// pause countdown
+	ipcRenderer.send("stopBackUp:mode", false);
 	clearInterval(runningCountdowns[parseInt(this.parentElement.id.split("-")[1])]);
 }
 
@@ -160,6 +161,7 @@ function startBackUp() {
 
 	// stop function if countdown is not set
 	if (this.parentElement.childNodes[6].innerHTML === "On file change") {
+		ipcRenderer.send("stopBackUp:mode", true);
 		return;
 	}
 
