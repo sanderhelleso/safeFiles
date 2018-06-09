@@ -94,14 +94,16 @@ ipcMain.on("directoryFrom:path", function(e, path){
 });
 
 // handler for to path
-ipcMain.on("directoryTo:path", function(e, path){
+ipcMain.on("directoryTo:path", function(e, path) {
 	pathTo = path[0];
 	mainWindow.webContents.send("directoryTo:path", path);
 
 	if (path[1] != "watch") {
 		console.log(path[1]);
 		// run copy files with from path, to path and the amount of millisecs
-		copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000);
+		let newBackup = copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000, backupCount, parseInt(path[1]) * 1000);
+		backups.push(newBackup);
+		backupCount++;
 	}
 
 	else {
@@ -110,11 +112,27 @@ ipcMain.on("directoryTo:path", function(e, path){
 	}
 });
 
-// functon to copy files from selected dirs, run on parameter millisecs
-function copyFiles(pathFrom, pathTo, millisecs) {
-	console.log(millisecs);
+// stop backup
+ipcMain.on("stopBackUp:nr", function(e, nr) {
+	clearInterval(backups[nr]);
+	console.log(backups[nr]);
+});
 
-	setInterval(function(){
+// start backup
+ipcMain.on("startBackUp:nr", function(e, nr) {
+	console.log(nr);
+	backups[parseInt(nr[3])] = copyFiles(nr[0], nr[1], parseInt(nr[3]), nr[2], nr[4], true);
+});
+
+// functon to copy files from selected dirs, run on parameter millisecs
+let backupCount = 0;
+let backups = [];
+function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
+	// calculate correct time when pausing / starting a backup
+	millisecs = (original + millisecs) / 2;
+	stopped = undefined;
+
+	return setInterval(function(){
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
 		fs.readdir(pathFrom, function(err, files) {
@@ -129,6 +147,10 @@ function copyFiles(pathFrom, pathTo, millisecs) {
 	    	});
 		});
 	}, millisecs);
+}
+
+function calculateRemainingTime() {
+
 }
 
 // watch files for change

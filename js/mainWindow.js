@@ -88,6 +88,7 @@ function start() {
 			// always run last timer added to array
 			let startCountdown = countdown(countdownValues[countdownValues.length - 1].innerHTML, backUpDiv.childNodes[1].childNodes[1], hiddenTimer.id, parseInt(path[1]) * 1000);
 			runningCountdowns.push(startCountdown);
+			originalValues.push(parseInt(path[1]) * 1000);
 		}
 
 		else {
@@ -148,6 +149,7 @@ function stopBackUp() {
 
 	// pause countdown
 	ipcRenderer.send("stopBackUp:mode", false);
+	ipcRenderer.send("stopBackUp:nr", this.parentElement.id.split("-")[1]);
 	clearInterval(runningCountdowns[parseInt(this.parentElement.id.split("-")[1])]);
 }
 
@@ -173,7 +175,9 @@ function startBackUp() {
 	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
 	let ele = this.parentElement.childNodes[1].childNodes[1];
 	let id = this.parentElement.childNodes[6].id;
-	runningCountdowns[parseInt(this.parentElement.id.split("-")[1])] = countdown(millisecs, ele, id);
+	console.log(this.parentElement.childNodes);
+	ipcRenderer.send("startBackUp:nr", [this.parentElement.childNodes[0].innerHTML, this.parentElement.childNodes[2].innerHTML, this.parentElement.id.split("-")[1], millisecs, originalValues[parseInt(this.parentElement.id.split("-")[1])]]);
+	runningCountdowns[parseInt(this.parentElement.id.split("-")[1])] = countdown(millisecs, ele, id, originalValues[parseInt(this.parentElement.id.split("-")[1])]);
 }
 
 function convertMillisecs(millisecs) {
@@ -189,6 +193,7 @@ function convertMillisecs(millisecs) {
 };
 
 // Update the count down every 1 second
+let originalValues = [];
 let countdownValues = [];
 let runningCountdowns = [];
 function countdown(millisecs, ele, id, original) {
@@ -211,7 +216,6 @@ function countdown(millisecs, ele, id, original) {
 	  	if (parseInt(countdownValues[currentCountdown].innerHTML) === 1000) {
 	  		countdownValues[currentCountdown].innerHTML = original + 1000;
 	  	}
-
 
 	  	// reduce by 1000 every interval
 	  	countdownValues[currentCountdown].innerHTML = parseInt(countdownValues[currentCountdown].innerHTML) - 1000;
