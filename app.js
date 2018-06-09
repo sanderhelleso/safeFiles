@@ -129,10 +129,8 @@ let backupCount = 0;
 let backups = [];
 function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 	// calculate correct time when pausing / starting a backup
-	millisecs = (original + millisecs) / 2;
-	stopped = undefined;
-
 	return setInterval(function(){
+		console.log(millisecs);
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
 		fs.readdir(pathFrom, function(err, files) {
