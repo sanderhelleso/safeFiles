@@ -223,10 +223,15 @@ function countdown(millisecs, ele, id, original) {
 }
 
 // send all backups on app quit
-ipcRenderer.on("getBackups:data", function(e, dataArr) {
+ipcRenderer.on("getBackups:data", function(e, dataArr, backupArr) {
+	for (let i = 0; i < backupArr.length; i++) {
+		console.log(backupArr[i]);
+		originalValues[i] = backupArr[i][4];
+	}
 	const backUpEles = document.querySelectorAll(".backedUpDir");
 	let count = 0;
 	backUpEles.forEach(ele => {
+		originalValues[count]
 		// update values for backend
 		ele.childNodes[5].click();
 		ele.childNodes[4].click();
@@ -235,7 +240,19 @@ ipcRenderer.on("getBackups:data", function(e, dataArr) {
 		dataArr.push([count]);
 		count++;
 	});
+
 	ipcRenderer.send("sendBackups:data", dataArr);
+});
+
+// send all backups on app quit
+ipcRenderer.on("setOriginal:timer", function(e, millisecs, id) {
+	console.log(id);
+	console.log(millisecs);
+
+	// get specific ele
+	const ele = document.querySelectorAll(".backedUpDir")[id];
+	ele.childNodes[6].innerHTML = millisecs;
+	originalValues[id] = millisecs;
 });
 
 function idGenerator() {

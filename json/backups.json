@@ -1,1 +1,1 @@
-[{"pathFrom":"C:\\saveFilesTestFolder","pathTo":"C:\\saveFilesTestFolder2","millisecs":10,"backupNr":0,"original":15,"stopped":true}]
+[{"pathFrom":"C:\\saveFilesTestFolder1","pathTo":"C:\\saveFilesTestFolder2","millisecs":16,"backupNr":0,"original":20,"stopped":true},{"pathFrom":"C:\\saveFilesTestFolder1","pathTo":"C:\\saveFilesTestFolder2","millisecs":86356,"backupNr":1,"original":86400,"stopped":true}]

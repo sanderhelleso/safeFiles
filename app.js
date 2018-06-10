@@ -141,6 +141,7 @@ ipcMain.on("stopBackUp:nr", function(e, nr) {
 // start backup
 ipcMain.on("startBackUp:nr", function(e, nr) {
 	// start selected backup and pass inn "stopped" to revert back in interval
+	console.log(nr[4]);
 	backups[parseInt(nr[2])] = copyFiles(nr[0], nr[1], nr[3], parseInt(nr[2]), nr[4], true);
 });
 
@@ -171,9 +172,15 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 		// if the countdown has been stopped, reset to original value when modified interval is done
 		if (stopped) {
 			clearInterval(backups[backupNr]);
+			console.log(backupNr);
 			backups[backupNr] = copyFiles(pathFrom, pathTo, original, backupNr, original, false);
-
+			mainWindow.webContents.send("setOriginal:timer", backupsParams[backupNr][4], backupNr);
 		}
+
+		else {
+			mainWindow.webContents.send("setOriginal:timer", backupsParams[backupNr][4], backupNr);
+		}
+
 	}, millisecs);
 }
 
@@ -378,9 +385,10 @@ function getJSON() {
 }
 
 // get stored data from JSON file
-function getBackUps(backups) {
-	backups.forEach(backup => {
-		console.log(backup);
+function getBackUps(jsonBackups) {
+	jsonBackups.forEach(backup => {
+		backups[backup.backupNr] = copyFiles(backup.pathFrom, backup.pathTo, backup.millisecs * 1000, backup.backupNr, backup.original * 1000, backup.stopped);
+		backupCount++;
 		// send data to main window and create elements
 		mainWindow.webContents.send("directoryFrom:path", backup.pathFrom);
 		mainWindow.webContents.send("directoryTo:path", [backup.pathTo, backup.millisecs]);
@@ -392,7 +400,7 @@ function saveData(e) {
 	e.preventDefault();
 
 	// get backups from main window
-	mainWindow.webContents.send("getBackups:data", []);
+	mainWindow.webContents.send("getBackups:data", [], backupsParams);
 	ipcMain.on("sendBackups:data", function(e, dataArr) {
 		let count = 0;
 		dataArr.forEach(data => {
@@ -403,25 +411,28 @@ function saveData(e) {
 		});
 
 		const liveBackups = dataArr;
-		console.log(liveBackups);
-
-		console.log("Starting app quit...");
 		let jsonData = [];
 		liveBackups.forEach(backup => {
+			console.log(backupsParams[backup[0]]);
+			console.log(backupsParams[backup[0]][2] / 1000);
+
+			// create json object
 			let jsonBackup = {
 				pathFrom: backup[1],
 				pathTo: backup[2],
-				millisecs: backup[3] / 1000,
+				millisecs: backupsParams[backup[0]][2] / 1000,
 				backupNr: backup[0],
-				original: backup[5] / 1000,
+				original: backupsParams[backup[0]][4] / 1000,
 				stopped: backup[6]
 			}
 
+			// push object to array
 			jsonData.push(jsonBackup);
 		});
 
-		// strinify data
+		// strinify data object
 		let data = JSON.stringify(jsonData);
+
 		// write to file
 		fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
 		    if (err) {
