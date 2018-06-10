@@ -364,8 +364,13 @@ function getJSON() {
 	}
 
 	catch (e) {
-		console.log('oh no big error')
-		console.log(e);
+		// if file is not present create it
+		if (e.code === "MODULE_NOT_FOUND") {
+			fs.open("./json/backups.json", "w", function (err, file) {
+			  	if (err) throw err;
+			  	return require("./json/backups.json");
+			});
+		}
 	}
 }
 
