@@ -52,8 +52,10 @@ app.on("ready", function() {
 	mainWindow.setResizable(false);
 
 	// close app and all open windows on exit
-	mainWindow.on("closed", function(){
-		appQuit();
+	mainWindow.on("close", function(e){
+		appQuit(e, jsonBackups);
+	   	maininWindow = null;
+		app.quit();
 	});
 });
 
@@ -361,8 +363,29 @@ function getBackUps(backups) {
 }
 
 // store backups to JSON file and quit application
-function appQuit() {
-	console.log(123);
-	mainWindow = null;
-	app.quit();
+function appQuit(e, backups) {
+	console.log("Starting app quit...");
+
+	// some test data
+	let content = {
+		pathFrom: "C:\\saveFilesTestFolder",
+		pathTo: "C:\\saveFilesTestFolder2",
+		millisecs: 100
+	}
+
+	e.preventDefault();
+
+	// strinify data
+	let data = JSON.stringify(content);
+	// write to file
+	fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
+		console.log(data);
+	    if (err) {
+	        return console.log(err);
+	    }
+
+	    // exit application when file is done writing
+	    console.log("The file was saved!");
+	    e.preventDefault = false;
+	}); 
 }
