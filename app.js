@@ -147,9 +147,11 @@ ipcMain.on("startBackUp:nr", function(e, nr) {
 // functon to copy files from selected dirs, run on parameter millisecs
 let backupCount = 0;
 let backups = [];
+let backupsParams = [];
 function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 	// calculate correct time when pausing / starting a backup
-	return setInterval(function(){
+	backupsParams[backupNr] = [pathFrom, pathTo, millisecs, backupNr, original, stopped];
+	return setInterval(function() {
 		console.log(millisecs);
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
@@ -363,6 +365,7 @@ function getJSON() {
 		return require("./json/backups.json");
 	}
 
+	// error handling
 	catch (e) {
 		// if file is not present create it
 		if (e.code === "MODULE_NOT_FOUND") {
@@ -378,6 +381,7 @@ function getJSON() {
 function getBackUps(backups) {
 	backups.forEach(backup => {
 		console.log(backup);
+		// send data to main window and create elements
 		mainWindow.webContents.send("directoryFrom:path", backup.pathFrom);
 		mainWindow.webContents.send("directoryTo:path", [backup.pathTo, backup.millisecs]);
 	});
@@ -386,26 +390,46 @@ function getBackUps(backups) {
 // store backups to JSON file and quit application
 function saveData(e) {
 	e.preventDefault();
-	console.log("Starting app quit...");
 
-	// some test data
-	let content = {
-		pathFrom: "C:\\saveFilesTestFolder",
-		pathTo: "C:\\saveFilesTestFolder2",
-		millisecs: 100
-	}
+	// get backups from main window
+	mainWindow.webContents.send("getBackups:data", []);
+	ipcMain.on("sendBackups:data", function(e, dataArr) {
+		let count = 0;
+		dataArr.forEach(data => {
+			backupsParams[count].forEach(param => {
+				data.push(param);
+			})
+			count++;
+		});
 
-	// strinify data
-	let data = JSON.stringify(content);
-	// write to file
-	fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
-	    if (err) {
-	        return console.log(err);
-	    }
+		const liveBackups = dataArr;
+		console.log(liveBackups);
 
-	    // run exit function when done writing
-	    console.log(data);
-	    appQuit(e);
+		console.log("Starting app quit...");
+		/*let content = [
+			{
+				pathFrom: "C:\\saveFilesTestFolder",
+				pathTo: "C:\\saveFilesTestFolder2",
+				millisecs: 100
+			},
+			{
+				pathFrom: "C:\\saveFilesTestFolder",
+				pathTo: "C:\\saveFilesTestFolder2",
+				millisecs: 100
+			}
+		]*/
+
+		// strinify data
+		let data = JSON.stringify(content);
+		// write to file
+		fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
+		    if (err) {
+		        return console.log(err);
+		    }
+
+		    // run exit function when done writing
+		    appQuit(e);
+		});
 	});
 }
 

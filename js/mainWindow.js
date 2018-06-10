@@ -34,8 +34,6 @@ function start() {
 		backUpDiv.appendChild(fromDir);
 		backUpDiv.appendChild(timer);
 
-		console.log(path);
-
 		// display in main window
 		document.querySelector("#backedUpCont").appendChild(backUpDiv);
 	});
@@ -223,6 +221,22 @@ function countdown(millisecs, ele, id, original) {
 	  	countdownValues[currentCountdown].innerHTML = parseInt(countdownValues[currentCountdown].innerHTML) - 1000;
 	}, 1000);
 }
+
+// send all backups on app quit
+ipcRenderer.on("getBackups:data", function(e, dataArr) {
+	const backUpEles = document.querySelectorAll(".backedUpDir");
+	let count = 0;
+	backUpEles.forEach(ele => {
+		// update values for backend
+		ele.childNodes[5].click();
+		ele.childNodes[4].click();
+
+		// send data to app.js
+		dataArr.push([count]);
+		count++;
+	});
+	ipcRenderer.send("sendBackups:data", dataArr);
+});
 
 function idGenerator() {
     let id = function() {
