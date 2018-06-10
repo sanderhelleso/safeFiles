@@ -406,21 +406,22 @@ function saveData(e) {
 		console.log(liveBackups);
 
 		console.log("Starting app quit...");
-		/*let content = [
-			{
-				pathFrom: "C:\\saveFilesTestFolder",
-				pathTo: "C:\\saveFilesTestFolder2",
-				millisecs: 100
-			},
-			{
-				pathFrom: "C:\\saveFilesTestFolder",
-				pathTo: "C:\\saveFilesTestFolder2",
-				millisecs: 100
+		let jsonData = [];
+		liveBackups.forEach(backup => {
+			let jsonBackup = {
+				pathFrom: backup[1],
+				pathTo: backup[2],
+				millisecs: backup[3] / 1000,
+				backupNr: backup[0],
+				original: backup[5] / 1000,
+				stopped: backup[6]
 			}
-		]*/
+
+			jsonData.push(jsonBackup);
+		});
 
 		// strinify data
-		let data = JSON.stringify(content);
+		let data = JSON.stringify(jsonData);
 		// write to file
 		fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
 		    if (err) {
