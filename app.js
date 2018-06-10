@@ -6,15 +6,17 @@ const electron = require("electron");
 const url = require("url");
 const path = require("path");
 const fs = require("fs-extra");
-const jsonBackups = require("./json/backups.json");
+const jsonBackups = getJSON();
 require('events').EventEmitter.defaultMaxListeners = 0;
 process.on("uncaughtException", (err) => {});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+
 // init auto launch
-autoLaunch();
-// app windows
+autoLaunch(); // @TODO: FIX THIS!!
+
+// app windows set as globals
 let mainWindow;
 let selectDirWindow;
 
@@ -266,10 +268,13 @@ function getTotalSize(pathToDir, dir) {
 	    	// check if file is dir
 	    	let isDir = fs.lstatSync(file).isDirectory();
 	    	if (isDir) {
+	    		// run function on the file if its a directory
 	    		getTotalSize(file, dir);
 	    	}
 	    });
 	});
+
+	// convert bytes
 	bytesToSize(fileSizeInBytes);
 
 	if (dir === "from") {
@@ -335,7 +340,6 @@ if (process.env.NODE_ENV != "production") {
 	});
 }
 
-
 // auto launch app on system start
 function autoLaunch() {
 	const appFolder = path.dirname(process.execPath)
@@ -350,6 +354,19 @@ function autoLaunch() {
 	      '--process-start-args', `"--hidden"`
 	    ]
 	})
+}
+
+// parse JSON data
+function getJSON() {
+	try {
+		// init backups if not empty
+		return require("./json/backups.json");
+	}
+
+	catch (e) {
+		console.log('oh no big error')
+		console.log(e);
+	}
 }
 
 // get stored data from JSON file
@@ -377,14 +394,12 @@ function saveData(e) {
 	let data = JSON.stringify(content);
 	// write to file
 	fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
-		console.log(data);
 	    if (err) {
 	        return console.log(err);
 	    }
 
-	    console.log("The file was saved!");
-
 	    // run exit function when done writing
+	    console.log(data);
 	    appQuit(e);
 	});
 }

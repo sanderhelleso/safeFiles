@@ -1,1 +1,21 @@
-{"pathFrom":"C:\\saveFilesTestFolder","pathTo":"C:\\saveFilesTestFolder2","millisecs":100}
+[
+	{
+		"pathFrom": "C:\\saveFilesTestFolder",
+		"pathTo": "C:\\saveFilesTestFolder2",
+		"millisecs": 100
+	},
+	{
+		"pathFrom": "C:\\saveFilesTestFolder",
+		"pathTo": "C:\\saveFilesTestFolder2",
+		"millisecs": 100
+	},
+	{
+		"pathFrom": "C:\\saveFilesTestFolder",
+		"pathTo": "C:\\saveFilesTestFolder2",
+		"millisecs": 100
+	},{
+		"pathFrom": "C:\\saveFilesTestFolder",
+		"pathTo": "C:\\saveFilesTestFolder2",
+		"millisecs": 100
+	}
+]
