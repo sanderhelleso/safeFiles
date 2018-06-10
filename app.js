@@ -366,7 +366,7 @@ function getJSON() {
 	catch (e) {
 		// if file is not present create it
 		if (e.code === "MODULE_NOT_FOUND") {
-			fs.open("./json/backups.json", "w", function (err, file) {
+			fs.open("./json/backups.json", "w", function (err) {
 			  	if (err) throw err;
 			  	return require("./json/backups.json");
 			});
