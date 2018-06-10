@@ -53,8 +53,7 @@ app.on("ready", function() {
 
 	// close app and all open windows on exit
 	mainWindow.on("closed", function(){
-		mainWindow = null;
-		app.quit();
+		appQuit();
 	});
 });
 
@@ -359,4 +358,11 @@ function getBackUps(backups) {
 		mainWindow.webContents.send("directoryFrom:path", backup.pathFrom);
 		mainWindow.webContents.send("directoryTo:path", [backup.pathTo, backup.millisecs]);
 	});
+}
+
+// store backups to JSON file and quit application
+function appQuit() {
+	console.log(123);
+	mainWindow = null;
+	app.quit();
 }
