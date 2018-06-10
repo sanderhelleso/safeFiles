@@ -53,9 +53,7 @@ app.on("ready", function() {
 
 	// close app and all open windows on exit
 	mainWindow.on("close", function(e){
-		appQuit(e, jsonBackups);
-	   	maininWindow = null;
-		app.quit();
+		appQuit(e);
 	});
 });
 
@@ -363,7 +361,8 @@ function getBackUps(backups) {
 }
 
 // store backups to JSON file and quit application
-function appQuit(e, backups) {
+function appQuit(e) {
+	e.preventDefault();
 	console.log("Starting app quit...");
 
 	// some test data
@@ -372,8 +371,6 @@ function appQuit(e, backups) {
 		pathTo: "C:\\saveFilesTestFolder2",
 		millisecs: 100
 	}
-
-	e.preventDefault();
 
 	// strinify data
 	let data = JSON.stringify(content);
@@ -386,6 +383,17 @@ function appQuit(e, backups) {
 
 	    // exit application when file is done writing
 	    console.log("The file was saved!");
-	    e.preventDefault = false;
-	}); 
+
+	    // exits the app when done writing to file
+	    e.defaultPrevented = false;
+
+	    // necessary to bypass the repeat-quit-check in the render process.
+	    mainWindow.destroy();
+
+	    // quit application
+	    app.quit();
+
+	    // stop app process
+    	mainWindow = null;
+	});
 }
