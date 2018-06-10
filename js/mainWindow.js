@@ -70,8 +70,6 @@ function start() {
 		backUpDiv.appendChild(startBtn);
 		backUpDiv.appendChild(stopBtn);
 
-		console.log(path[1]);
-
 		//  hidden ele to keep trac of its timer
 		let hiddenTimer = document.createElement("span");
 		hiddenTimer.style.display = "none";
@@ -100,6 +98,8 @@ function start() {
 			let startCountdown = "On file change";
 			runningCountdowns.push(startCountdown);
 		}
+
+		noBackUps(runningCountdowns);
 	});
 
 	// fullscreen menu toggle
@@ -175,7 +175,6 @@ function startBackUp() {
 	let millisecs = parseInt(this.parentElement.childNodes[6].innerHTML);
 	let ele = this.parentElement.childNodes[1].childNodes[1];
 	let id = this.parentElement.childNodes[6].id;
-	console.log(this.parentElement.childNodes);
 	ipcRenderer.send("startBackUp:nr", [this.parentElement.childNodes[0].innerHTML, this.parentElement.childNodes[2].innerHTML, this.parentElement.id.split("-")[1], millisecs, originalValues[parseInt(this.parentElement.id.split("-")[1])]]);
 	runningCountdowns[parseInt(this.parentElement.id.split("-")[1])] = countdown(millisecs, ele, id, originalValues[parseInt(this.parentElement.id.split("-")[1])]);
 }
@@ -227,4 +226,14 @@ function idGenerator() {
        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
     };
     return (id() + id() + "-" + id() + "-" + id() + "-" + id() + "-" + id() + id() + id());
+}
+
+function noBackUps(arr) {
+	if (arr.length >= 1) {
+		document.querySelector("#noBackUps").style.display = "none";
+	}
+
+	else {
+		document.querySelector("#noBackUps").style.display = "block";
+	}
 }

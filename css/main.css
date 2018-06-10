@@ -198,6 +198,13 @@ body {
 	opacity: 0.5;
 }
 
+#addBackUpSide {
+	margin-top: 15px;
+	background-color: transparent;
+	border: 1px solid white;
+	opacity: 0.5;
+	margin-bottom: 15px;
+}
 
 /******************* ANIMATIONS *********************/
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }

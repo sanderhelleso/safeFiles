@@ -11,6 +11,7 @@ process.on("uncaughtException", (err) => {});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+autoLaunch();
 
 // app windows
 let mainWindow;
@@ -21,7 +22,7 @@ app.on("ready", function() {
 
 	// create new window
 	mainWindow = new BrowserWindow({
-		icon: path.join(__dirname + "/img/icon/deer.ico"),
+		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
 		width: 1150,
 		height: 600,
 		frame: false,
@@ -52,6 +53,7 @@ app.on("ready", function() {
 function createSelectDirWindow() {
 	// create new window
 	selectDirWindow = new BrowserWindow({
+		icon: path.join(__dirname + "/img/icon/safeFiles.ico"),
 		width: 800,
 		height: 525,
 		title: "Select directory",
@@ -129,7 +131,7 @@ let backupCount = 0;
 let backups = [];
 function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 	// calculate correct time when pausing / starting a backup
-	return setInterval(function(){
+	/*return setInterval(function(){
 		console.log(millisecs);
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
@@ -144,7 +146,7 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    	});
 		});
-	}, millisecs);
+	}, millisecs);*/
 }
 
 function calculateRemainingTime() {
@@ -311,4 +313,21 @@ if (process.env.NODE_ENV != "production") {
 			}
 		]
 	});
+}
+
+
+// auto launch app on system start
+function autoLaunch() {
+	const appFolder = path.dirname(process.execPath)
+	const updateExe = path.resolve(appFolder, '..', 'Update.exe')
+	const exeName = path.basename(process.execPath)
+	  
+	app.setLoginItemSettings({
+	    openAtLogin: true,
+	    path: updateExe,
+	    args: [
+	      '--processStart', `"${exeName}"`,
+	      '--process-start-args', `"--hidden"`
+	    ]
+	})
 }
