@@ -116,14 +116,14 @@ ipcMain.on("directoryTo:path", function(e, path) {
 
 // stop backup
 ipcMain.on("stopBackUp:nr", function(e, nr) {
+	// stop the selected backup
 	clearInterval(backups[nr]);
-	console.log(backups[nr]);
 });
 
 // start backup
 ipcMain.on("startBackUp:nr", function(e, nr) {
-	console.log(nr);
-	backups[parseInt(nr[3])] = copyFiles(nr[0], nr[1], parseInt(nr[3]), nr[2], nr[4], true);
+	// start selected backup and pass inn "stopped" to revert back in interval
+	backups[parseInt(nr[2])] = copyFiles(nr[0], nr[1], nr[3], parseInt(nr[2]), nr[4], true);
 });
 
 // functon to copy files from selected dirs, run on parameter millisecs
@@ -131,22 +131,30 @@ let backupCount = 0;
 let backups = [];
 function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 	// calculate correct time when pausing / starting a backup
-	/*return setInterval(function(){
+	return setInterval(function(){
 		console.log(millisecs);
 		console.log("Copyed a file at: " + new Date());
 		// read selected from directory
 		fs.readdir(pathFrom, function(err, files) {
 			if (err) {
-				console.log(err);
+				console.log(err); // @TODO: add some error handling here
 				throw err;
 			}
 
+			// go through every file in selected dir
 	    	files.forEach(file => {
-	    		// copy files from selected dirs
+	    		// copy files from selected dir to selected dir
 	    		fs.copySync(path.resolve(pathFrom, file), pathTo + "/" + file);
 	    	});
 		});
-	}, millisecs);*/
+
+		// if the countdown has been stopped, reset to original value when modified interval is done
+		if (stopped) {
+			clearInterval(backups[backupNr]);
+			backups[backupNr] = copyFiles(pathFrom, pathTo, original, backupNr, original, false);
+
+		}
+	}, millisecs);
 }
 
 function calculateRemainingTime() {
