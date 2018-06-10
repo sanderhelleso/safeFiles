@@ -190,6 +190,15 @@ body {
 	color: #ef5350;
 }
 
+#noBackUps {
+	margin-top: 75px;
+}
+
+#noBackUps h5 {
+	opacity: 0.5;
+}
+
+
 /******************* ANIMATIONS *********************/
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
