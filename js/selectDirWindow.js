@@ -14,6 +14,7 @@ function start() {
 	document.querySelector(".button-img-close").style.filter = "invert(100%)";
 
 	handleFileStats();
+	prepIpc();
 }
 
 // regex for valid path validation

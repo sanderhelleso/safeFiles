@@ -34,6 +34,8 @@ function start() {
 		backUpDiv.appendChild(fromDir);
 		backUpDiv.appendChild(timer);
 
+		console.log(path);
+
 		// display in main window
 		document.querySelector("#backedUpCont").appendChild(backUpDiv);
 	});
@@ -99,6 +101,7 @@ function start() {
 			runningCountdowns.push(startCountdown);
 		}
 
+		// check if backups are present
 		noBackUps(runningCountdowns);
 	});
 

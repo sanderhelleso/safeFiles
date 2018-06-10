@@ -1,12 +1,7 @@
 [
   {
-    "name": "c",
-    "content": 3,
-    "_prototype": "item"
-  },
-  {
-    "name": "d",
-    "content": 4,
-    "_prototype": "item"
+    "pathFrom": "C:\\saveFilesTestFolder",
+    "pathTo": "C:\\saveFilesTestFolder",
+    "millisecs": 20
   }
 ]

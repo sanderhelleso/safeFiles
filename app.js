@@ -14,10 +14,6 @@ process.on("uncaughtException", (err) => {});
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 // init auto launch
 autoLaunch();
-
-// get saved backups
-getBackUps(jsonBackups);
-
 // app windows
 let mainWindow;
 let selectDirWindow;
@@ -31,6 +27,7 @@ app.on("ready", function() {
 		width: 1150,
 		height: 600,
 		frame: false,
+		show: false
 	});
 
 	// load html into window
@@ -39,6 +36,13 @@ app.on("ready", function() {
 		protocol: "file:",
 		slashes: true,
 	}));
+
+	// show window when loaded
+	mainWindow.once("ready-to-show", () => {
+		mainWindow.show()
+		// create backups from JSON file
+		getBackUps(jsonBackups);
+	});
 
 	// set app menu
 	const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
@@ -62,7 +66,8 @@ function createSelectDirWindow() {
 		width: 800,
 		height: 525,
 		title: "Select directory",
-		frame: false
+		frame: false,
+		show: false
 	});
 
 	// load html into window
@@ -71,6 +76,11 @@ function createSelectDirWindow() {
 		protocol: "file:",
 		slashes: true
 	}));
+
+	// show window when loaded
+	selectDirWindow.once("ready-to-show", () => {
+		selectDirWindow.show()
+	});
 
 	// garbage collecton
 	selectDirWindow.on("close", function(){
@@ -84,6 +94,7 @@ function createSelectDirWindow() {
 
 	// disable resizing of window
 	selectDirWindow.setResizable(false);
+
 }
 
 /******************************************* 
@@ -160,10 +171,6 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 
 		}
 	}, millisecs);
-}
-
-function calculateRemainingTime() {
-
 }
 
 // watch files for change
@@ -349,5 +356,7 @@ function autoLaunch() {
 function getBackUps(backups) {
 	backups.forEach(backup => {
 		console.log(backup);
+		mainWindow.webContents.send("directoryFrom:path", backup.pathFrom);
+		mainWindow.webContents.send("directoryTo:path", [backup.pathTo, backup.millisecs]);
 	});
 }
