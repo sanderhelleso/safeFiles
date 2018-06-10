@@ -6,12 +6,17 @@ const electron = require("electron");
 const url = require("url");
 const path = require("path");
 const fs = require("fs-extra");
+const jsonBackups = require("./json/backups.json");
 require('events').EventEmitter.defaultMaxListeners = 0;
 process.on("uncaughtException", (err) => {});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
+// init auto launch
 autoLaunch();
+
+// get saved backups
+getBackUps(jsonBackups);
 
 // app windows
 let mainWindow;
@@ -338,4 +343,11 @@ function autoLaunch() {
 	      '--process-start-args', `"--hidden"`
 	    ]
 	})
+}
+
+// get stored data from JSON file
+function getBackUps(backups) {
+	backups.forEach(backup => {
+		console.log(backup);
+	});
 }
