@@ -171,13 +171,15 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 
 		// if the countdown has been stopped, reset to original value when modified interval is done
 		if (stopped) {
-			clearInterval(backups[backupNr]);
-			console.log(backupNr);
+			// start a new backup on the current index in array
 			backups[backupNr] = copyFiles(pathFrom, pathTo, original, backupNr, original, false);
+			
+			// send original value to main
 			mainWindow.webContents.send("setOriginal:timer", backupsParams[backupNr][4], backupNr);
 		}
 
 		else {
+			// send original value to main
 			mainWindow.webContents.send("setOriginal:timer", backupsParams[backupNr][4], backupNr);
 		}
 
@@ -256,6 +258,7 @@ function getTotalSize(pathToDir, dir) {
 	    		fileExtsNames.push(path.extname(file));
 	    	}
 
+	    	// dont include unknown files
 	    	fileExtsNamesCount.length = fileExtsNames.length;
 	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] === undefined && path.extname(file) != "") {
 	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = 1;
@@ -387,8 +390,12 @@ function getJSON() {
 // get stored data from JSON file
 function getBackUps(jsonBackups) {
 	jsonBackups.forEach(backup => {
+		// start copyFiles function for each object in file
 		backups[backup.backupNr] = copyFiles(backup.pathFrom, backup.pathTo, backup.millisecs * 1000, backup.backupNr, backup.original * 1000, backup.stopped);
+
+		// increase the count that controlls backup index
 		backupCount++;
+
 		// send data to main window and create elements
 		mainWindow.webContents.send("directoryFrom:path", backup.pathFrom);
 		mainWindow.webContents.send("directoryTo:path", [backup.pathTo, backup.millisecs]);
@@ -397,6 +404,7 @@ function getBackUps(jsonBackups) {
 
 // store backups to JSON file and quit application
 function saveData(e) {
+	// prevent app from instantly closing
 	e.preventDefault();
 
 	// get backups from main window
@@ -410,11 +418,10 @@ function saveData(e) {
 			count++;
 		});
 
+		// array to contain objects
 		const liveBackups = dataArr;
 		let jsonData = [];
 		liveBackups.forEach(backup => {
-			console.log(backupsParams[backup[0]]);
-			console.log(backupsParams[backup[0]][2] / 1000);
 
 			// create json object
 			let jsonBackup = {
