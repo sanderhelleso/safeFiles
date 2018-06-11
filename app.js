@@ -131,7 +131,6 @@ ipcMain.on("directoryTo:path", function(e, path) {
 
 		// add to param counter
 		backupsParams.push([pathFrom, pathTo]);
-		console.log("squaewk");
 	}
 });
 
@@ -396,7 +395,16 @@ function getJSON() {
 function getBackUps(jsonBackups) {
 	jsonBackups.forEach(backup => {
 		// start copyFiles function for each object in file
-		backups[backup.backupNr] = copyFiles(backup.pathFrom, backup.pathTo, backup.millisecs * 1000, backup.backupNr, backup.original * 1000, backup.stopped);
+		if (backup.millisecs != null) {
+			backups[backup.backupNr] = copyFiles(backup.pathFrom, backup.pathTo, backup.millisecs * 1000, backup.backupNr, backup.original * 1000, backup.stopped);
+		}
+
+		// run watch mode if present
+		else {
+			backup.millisecs = "watch";
+			fileWatcher(backup.pathFrom, backup.pathTo);
+			backupsParams.push([backup.pathFrom, backup.pathTo]);
+		}
 
 		// increase the count that controlls backup index
 		backupCount++;
