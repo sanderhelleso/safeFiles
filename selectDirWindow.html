@@ -27,28 +27,28 @@
 						<input id="directoryTo" type="text" name="directoryTo">
 			        </div>
 			      	</div>
-			      	<div id="buttons">
+			      	<div id="buttons" class="col s7">
 			      		<p>
 						    <label>
-						      	<input class="with-gap" name="group1" type="radio" value="20" />
-						      	<span>Every min</span>
+						      	<input class="with-gap validTimeOption" name="group1" type="radio" value="6000" />
+						      	<span>Every hour</span>
 						   	</label>
 						</p>
 				  		<p>
 						    <label>
-						      	<input class="with-gap" name="group1" type="radio" value="86400" />
+						      	<input class="with-gap validTimeOption" name="group1" type="radio" value="86400" />
 						      	<span>Every day</span>
 						   	</label>
 						</p>
 						<p>
 						    <label>
-						      	<input class="with-gap" name="group1" type="radio" value="259200" />
+						      	<input class="with-gap validTimeOption" name="group1" type="radio" value="259200" />
 						      	<span>Every 3 day</span>
 						   	</label>
 						</p>
 						<p>
 						    <label>
-						      	<input class="with-gap" name="group1" type="radio" value="604800" />
+						      	<input class="with-gap validTimeOption" name="group1" type="radio" value="604800" />
 						      	<span>Every 7 day</span>
 						   	</label>
 						</p>
@@ -58,8 +58,16 @@
 						      	<span>On file change</span>
 						   	</label>
 						</p>
+						<button type="submit" class="waves-effect waves-light btn z-depth-3"><i class="material-icons left">backup</i>Set backup</button>
 					</div>
-			      	<button type="submit" class="waves-effect waves-light btn z-depth-3"><i class="material-icons left">backup</i>Set backup</button>
+					<div id="selectTime" class="col s4">
+						<div class="input-field col s12">
+   						<div class="row">
+                    		<div class="input-field col s12">
+                        		<input type="text" class="timepicker">
+                    		</div>
+                		</div>
+					</div>
 				</div>
 			</form>
 			<div id="sideCont" class="col s4">

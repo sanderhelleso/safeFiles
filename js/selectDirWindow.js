@@ -13,8 +13,21 @@ function start() {
 	document.querySelector(".button-img-minimize").style.filter = "invert(100%)";
 	document.querySelector(".button-img-close").style.filter = "invert(100%)";
 
+	// init file handler
 	handleFileStats();
-	prepIpc();
+
+	// init timepicker
+	timepicker();
+	triggerTimepicker();
+}
+
+function triggerTimepicker() {
+	const options = document.querySelectorAll(".validTimeOption");
+	console.log(options);
+	options.forEach(ele => {
+		// open timepicker on click
+		ele.addEventListener("click", () => document.querySelector(".timepicker").click());
+	});
 }
 
 // regex for valid path validation
@@ -102,4 +115,9 @@ function handleFileStats() {
 		}
 		myChart2.update();
 	});
+}
+
+function timepicker() {
+   	var elems = document.querySelectorAll('.timepicker');
+    var instances = M.Timepicker.init(elems);
 }

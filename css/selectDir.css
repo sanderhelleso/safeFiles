@@ -113,7 +113,8 @@ input {
     border: 2px solid #f5f5f5 !important;
 }
 
-button {
+#buttons button {
+	margin-top: 10px;
 	background: #4776E6;  /* fallback for old browsers */
 	background: -webkit-linear-gradient(to left, #8E54E9, #4776E6);  /* Chrome 10-25, Safari 5.1-6 */
 	background: linear-gradient(to left, #8E54E9, #4776E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -139,4 +140,34 @@ button {
 	padding-right: 4px;
 	font-weight: 600;
 	font-size: 20px;
+}
+
+.timepicker {
+	display: none;
+}
+
+.timepicker-container:focus, .timepicker-modal:focus {
+	outline: none !important;
+}
+
+.timepicker-digital-display {
+	width: 200px !important;
+	background-color: #7c4dff !important;
+}
+
+.timepicker-container .timepicker-close:first-child {
+	color: #919191 !important;
+	background-color: transparent !important;
+	margin-right: 10px;
+	border: none !important;
+}
+
+.timepicker-container button {
+	color: white;
+	background-color: #7c4dff;
+	border: 1px solid #7c4dff;
+}
+
+.timepicker-tick {
+	font-weight: 600 !important;
 }
