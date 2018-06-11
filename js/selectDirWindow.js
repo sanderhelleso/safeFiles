@@ -118,6 +118,16 @@ function handleFileStats() {
 }
 
 function timepicker() {
-   	var elems = document.querySelectorAll('.timepicker');
-    var instances = M.Timepicker.init(elems);
+	// create the timepicker
+   	const timer = document.querySelectorAll('.timepicker');
+    const instance = M.Timepicker.init(timer, {
+    	twelveHour: false
+    });
+
+    // create heading
+    const timerHead = document.querySelector(".timepicker-digital-display");
+    const headerMsg = document.createElement("h5");
+    headerMsg.className = "center-align white-text timepickerHeading";
+    headerMsg.innerHTML = "At what time?";
+    timerHead.appendChild(headerMsg);
 }
