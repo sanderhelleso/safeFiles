@@ -120,6 +120,8 @@ function handleFileStats() {
 function timepicker() {
 	// create the timepicker
    	const timer = document.querySelectorAll('.timepicker');
+   	timer[0].addEventListener("change", reCalculateTime);
+   	console.log(timer[0]);
     const instance = M.Timepicker.init(timer, {
     	twelveHour: false
     });
@@ -128,6 +130,28 @@ function timepicker() {
     const timerHead = document.querySelector(".timepicker-digital-display");
     const headerMsg = document.createElement("h5");
     headerMsg.className = "center-align white-text timepickerHeading";
-    headerMsg.innerHTML = "At what time?";
+    headerMsg.innerHTML = "When do you want<br>the backup to run?";
     timerHead.appendChild(headerMsg);
+}
+
+function reCalculateTime() {
+	// get today
+	const today = new Date();
+
+	// get seconds from today
+	const todaySecs = today.getSeconds();
+
+	// get hour from timepicker
+	const hours = this.value.split(":")[0];
+
+	// get mins from timepicker
+	const mins = this.value.split(":")[1];
+
+	// get date with new selected values
+	const selectedTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, mins, todaySecs);
+
+	// get time in millisecs
+	const time = myToday.getTime() - today.getTime();
+
+	console.log(time);
 }
