@@ -61,7 +61,7 @@ function setDirectory(e) {
 
 	if (!isFile(pathFrom) && !isFile(pathTo) && validPath.test(pathFrom) && validPath.test(pathTo)) {
 		ipcRenderer.send("directoryFrom:path", pathFrom);
-		ipcRenderer.send("directoryTo:path", [pathTo, millisecs]);
+		ipcRenderer.send("directoryTo:path", [pathTo, parseInt(millisecs) + reCalculateTime()]); // @TODO: FIX WATCH MODE BUG
 	}
 }
 
@@ -153,8 +153,9 @@ function reCalculateTime() {
 	// get date with new selected values
 	const selectedTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, mins, todaySecs);
 
-	// get time in millisecs
-	const time = myToday.getTime() - today.getTime();
+	// get time in millisecs and to convert to app usable time
+	const time = (selectedTime.getTime() - today.getTime()) / 1000;
 
 	console.log(time);
+	return time;
 }
