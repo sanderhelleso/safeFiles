@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const jsonBackups = getJSON();
 require('events').EventEmitter.defaultMaxListeners = 0;
-process.on("uncaughtException", (err) => {});
+//process.on("uncaughtException", (err) => {});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -119,7 +119,6 @@ ipcMain.on("directoryTo:path", function(e, path) {
 	mainWindow.webContents.send("directoryTo:path", path);
 
 	if (path[1] != "watch") {
-		console.log(path[1]);
 		// run copy files with from path, to path and the amount of millisecs
 		let newBackup = copyFiles(pathFrom, pathTo, parseInt(path[1]) * 1000, backupCount, parseInt(path[1]) * 1000);
 		backups.push(newBackup);
@@ -129,6 +128,10 @@ ipcMain.on("directoryTo:path", function(e, path) {
 	else {
 		// run file watcher
 		fileWatcher(pathFrom, pathTo);
+
+		// add to param counter
+		backupsParams.push([pathFrom, pathTo]);
+		console.log("squaewk");
 	}
 });
 
@@ -141,7 +144,6 @@ ipcMain.on("stopBackUp:nr", function(e, nr) {
 // start backup
 ipcMain.on("startBackUp:nr", function(e, nr) {
 	// start selected backup and pass inn "stopped" to revert back in interval
-	console.log(nr[4]);
 	backups[parseInt(nr[2])] = copyFiles(nr[0], nr[1], nr[3], parseInt(nr[2]), nr[4], true);
 });
 
@@ -176,7 +178,7 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 
 			// replace with new with new values
 			backups[backupNr] = copyFiles(pathFrom, pathTo, original, backupNr, original, false);
-			
+
 			// send original value to main
 			mainWindow.webContents.send("setOriginal:timer", backupsParams[backupNr][4], backupNr);
 		}
@@ -415,6 +417,7 @@ function saveData(e) {
 	ipcMain.on("sendBackups:data", function(e, dataArr) {
 		let count = 0;
 		dataArr.forEach(data => {
+			console.log(data);
 			backupsParams[count].forEach(param => {
 				data.push(param);
 			})
@@ -436,6 +439,7 @@ function saveData(e) {
 				stopped: backup[6]
 			}
 
+			console.log(jsonBackup);
 			// push object to array
 			jsonData.push(jsonBackup);
 		});
@@ -444,8 +448,10 @@ function saveData(e) {
 		let data = JSON.stringify(jsonData);
 
 		// write to file
+		console.log(data);
 		fs.writeFile("./json/backups.json", data, 'utf8', function (err) {
 		    if (err) {
+		    	console.log(err);
 		        return console.log(err);
 		    }
 

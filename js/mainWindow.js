@@ -237,6 +237,7 @@ ipcRenderer.on("getBackups:data", function(e, dataArr, backupArr) {
 		ele.childNodes[4].click();
 
 		// send data to app.js
+		console.log([count]);
 		dataArr.push([count]);
 		count++;
 	});
