@@ -171,7 +171,10 @@ function copyFiles(pathFrom, pathTo, millisecs, backupNr, original, stopped) {
 
 		// if the countdown has been stopped, reset to original value when modified interval is done
 		if (stopped) {
-			// start a new backup on the current index in array
+			// stop current interval
+			clearInterval(backups[backupNr]);
+
+			// replace with new with new values
 			backups[backupNr] = copyFiles(pathFrom, pathTo, original, backupNr, original, false);
 			
 			// send original value to main
