@@ -135,6 +135,9 @@ function timepicker() {
 }
 
 function reCalculateTime() {
+	// get selected time values from timepicker
+	const timeValues = document.querySelectorAll('.timepicker')[0];
+
 	// get today
 	const today = new Date();
 
@@ -142,10 +145,10 @@ function reCalculateTime() {
 	const todaySecs = today.getSeconds();
 
 	// get hour from timepicker
-	const hours = this.value.split(":")[0];
+	const hours = timeValues.value.split(":")[0];
 
 	// get mins from timepicker
-	const mins = this.value.split(":")[1];
+	const mins = timeValues.value.split(":")[1];
 
 	// get date with new selected values
 	const selectedTime = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hours, mins, todaySecs);
