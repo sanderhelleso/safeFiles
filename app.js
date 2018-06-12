@@ -8,7 +8,9 @@ const path = require("path");
 const fs = require("fs-extra");
 const jsonBackups = getJSON();
 require('events').EventEmitter.defaultMaxListeners = 0;
-process.on("uncaughtException", (err) => {});
+process.on("uncaughtException", (err) => {
+	console.log(err);
+});
 
 // main app
 const {app, BrowserWindow, Menu, ipcMain} = electron;
@@ -42,7 +44,6 @@ app.on("ready", function() {
 	// show window when loaded
 	mainWindow.once("ready-to-show", () => {
 		mainWindow.show()
-		createSelectDirWindow();
 		// create backups from JSON file
 		getBackUps(jsonBackups);
 	});

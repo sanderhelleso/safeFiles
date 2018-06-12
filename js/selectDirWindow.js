@@ -61,7 +61,13 @@ function setDirectory(e) {
 
 	if (!isFile(pathFrom) && !isFile(pathTo) && validPath.test(pathFrom) && validPath.test(pathTo)) {
 		ipcRenderer.send("directoryFrom:path", pathFrom);
-		ipcRenderer.send("directoryTo:path", [pathTo, parseInt(millisecs) + reCalculateTime()]); // @TODO: FIX WATCH MODE BUG
+		if (millisecs != "watch") {
+			ipcRenderer.send("directoryTo:path", [pathTo, parseInt(millisecs) + reCalculateTime()]); // @TODO: FIX WATCH MODE BUG
+		}
+
+		else {
+			ipcRenderer.send("directoryTo:path", [pathTo, millisecs]);
+		}
 	}
 }
 
