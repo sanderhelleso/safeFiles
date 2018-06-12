@@ -59,6 +59,11 @@ function setDirectory(e) {
 		return;
 	}
 
+	if (pathFrom === pathTo) {
+		M.toast({html: 'Source and destination must not be the same'});
+		return;
+	}
+
 	if (!isFile(pathFrom) && !isFile(pathTo) && validPath.test(pathFrom) && validPath.test(pathTo)) {
 		ipcRenderer.send("directoryFrom:path", pathFrom);
 		if (millisecs != "watch") {
