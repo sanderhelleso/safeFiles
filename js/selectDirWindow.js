@@ -155,7 +155,5 @@ function reCalculateTime() {
 
 	// get time in millisecs and to convert to app usable time
 	const time = (selectedTime.getTime() - today.getTime()) / 1000;
-
-	console.log(time);
 	return time;
 }
