@@ -248,10 +248,10 @@ let fileSizeInBytes = 0;
 let fileExtsNames = [];
 let fileExtsNamesCount = [];
 function getTotalSize(pathToDir, dir) {
+	console.log(pathToDir);
 	fs.readdir(pathToDir, function(err, files) {
 		if (err) {
 			throw err;
-			return;
 		}
 
 		// check every file in directory	 	
@@ -260,20 +260,21 @@ function getTotalSize(pathToDir, dir) {
 
 	    	// get fileSize 
 	    	let stats = fs.statSync(file);
-	    	if (fileExtsNames.indexOf(path.extname(file)) === -1) {
-	    		fileExtsNames.push(path.extname(file));
+	    	if (fileExtsNames.indexOf(path.extname(file).toLowerCase()) === -1) {
+	    		fileExtsNames.push(path.extname(file).toLowerCase());
 	    	}
 
 	    	// dont include unknown files
 	    	fileExtsNamesCount.length = fileExtsNames.length;
-	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] === undefined && path.extname(file) != "") {
-	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = 1;
+	    	if (fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file).toLowerCase())] === undefined && path.extname(file).toLowerCase() != "") {
+	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file).toLowerCase())] = 1;
 	    	}
 
 	    	else {
-	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] = fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file))] + 1;
+	    		fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file).toLowerCase())] = fileExtsNamesCount[fileExtsNames.indexOf(path.extname(file).toLowerCase())] + 1;
 	    	}
 	    	fileSizeInBytes += stats.size;
+	    	console.log(fileSizeInBytes);
 
 	    	if (dir === "from") {
 	    		fromDirSize = fileSizeInBytes;
@@ -290,10 +291,9 @@ function getTotalSize(pathToDir, dir) {
 	    		getTotalSize(file, dir);
 	    	}
 	    });
-	});
-
-	// convert bytes
+	    // convert bytes
 	bytesToSize(fileSizeInBytes);
+	console.log(bytesToSize(fileSizeInBytes));
 
 	if (dir === "from") {
 		selectDirWindow.webContents.send("directoryFrom:dir", [bytesToSize(fromDirSize), fileExtsNames, fileExtsNamesCount]);
@@ -302,6 +302,7 @@ function getTotalSize(pathToDir, dir) {
 	else {
 		selectDirWindow.webContents.send("directoryTo:dir", [bytesToSize(toDirSize), fileExtsNames, fileExtsNamesCount]);
 	}
+	});
 }
 
 // algo for converting bytes to corresponding byte type
